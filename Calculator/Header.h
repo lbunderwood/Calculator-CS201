@@ -16,5 +16,10 @@
 
 bool getInt(int& num);
 
+bool getDouble(double& num);
+
+
+void trigMenu();
+
 
 #endif

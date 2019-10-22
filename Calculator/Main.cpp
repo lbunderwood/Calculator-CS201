@@ -33,7 +33,7 @@ int main()
 				//Function Call Here
 				break;
 			case 2:
-				//Function Call Here
+				trigMenu();
 				break;
 			case 3:
 				//Function Call Here
