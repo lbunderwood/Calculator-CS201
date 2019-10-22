@@ -51,8 +51,10 @@ int main()
 				//Function Call Here
 				break;
 			case 8:
-				//Function Call Here
 				break;
+			default:
+				std::cout << "Please enter one of the numbers listed." 
+					<< std::endl;
 			}
 		}
 		else
