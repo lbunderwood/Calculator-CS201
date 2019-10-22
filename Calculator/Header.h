@@ -14,7 +14,7 @@
 #include<sstream>
 #include<cmath>
 
-
+bool getInt(int& num);
 
 
 #endif
