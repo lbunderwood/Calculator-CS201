@@ -42,7 +42,8 @@ void trigMenu()
 
 	while (menuchoice != 13)
 	{
-		std::cout << "Please select one of the following options:" << std::endl
+		std::cout << std::endl
+			<< "Please select one of the following options:" << std::endl
 			<< "\t 1.  Sine" << std::endl
 			<< "\t 2.  Cosine" << std::endl
 			<< "\t 3.  Tangent" << std::endl
@@ -64,7 +65,8 @@ void trigMenu()
 			case 1:
 				if (getDouble(num))
 				{
-					std::cout << sin(num) << std::endl;
+					std::cout << "sin(" << num << ") = " << sin(num) 
+						<< std::endl;
 				}
 				else
 				{
@@ -74,7 +76,8 @@ void trigMenu()
 			case 2:
 				if (getDouble(num))
 				{
-					std::cout << cos(num) << std::endl;
+					std::cout << "cos(" << num << ") = " << cos(num)
+						<< std::endl;
 				}
 				else
 				{
@@ -84,7 +87,8 @@ void trigMenu()
 			case 3:
 				if (getDouble(num))
 				{
-					std::cout << tan(num) << std::endl;
+					std::cout << "tan(" << num << ") = " << tan(num)
+						<< std::endl;
 				}
 				else
 				{
@@ -94,7 +98,8 @@ void trigMenu()
 			case 4:
 				if (getDouble(num))
 				{
-					std::cout << 1 / cos(num) << std::endl;
+					std::cout << "sec(" << num << ") = " << 1 / cos(num)
+						<< std::endl;
 				}
 				else
 				{
@@ -104,7 +109,7 @@ void trigMenu()
 			case 5:
 				if (getDouble(num))
 				{
-					std::cout << 1 / sin(num) << std::endl;
+					std::cout << "csc(" << num << ") = " << 1 / sin(num) << std::endl;
 				}
 				else
 				{
@@ -114,7 +119,7 @@ void trigMenu()
 			case 6:
 				if (getDouble(num))
 				{
-					std::cout << 1 / tan(num) << std::endl;
+					std::cout << "cot(" << num << ") = " << 1 / tan(num) << std::endl;
 				}
 				else
 				{
@@ -124,7 +129,7 @@ void trigMenu()
 			case 7:
 				if (getDouble(num))
 				{
-					std::cout << asin(num) << std::endl;
+					std::cout << "asin(" << num << ") = " << asin(num) << std::endl;
 				}
 				else
 				{
@@ -134,7 +139,7 @@ void trigMenu()
 			case 8:
 				if (getDouble(num))
 				{
-					std::cout << acos(num) << std::endl;
+					std::cout << "acos(" << num << ") = " << acos(num) << std::endl;
 				}
 				else
 				{
@@ -144,7 +149,7 @@ void trigMenu()
 			case 9:
 				if (getDouble(num))
 				{
-					std::cout << atan(num) << std::endl;
+					std::cout << "atan(" << num << ") = " << atan(num) << std::endl;
 				}
 				else
 				{
@@ -154,7 +159,7 @@ void trigMenu()
 			case 10:
 				if (getDouble(num))
 				{
-					std::cout << 1 / asin(num) << std::endl;
+					std::cout << "asec(" << num << ") = " << 1 / acos(num) << std::endl;
 				}
 				else
 				{
@@ -164,7 +169,7 @@ void trigMenu()
 			case 11:
 				if (getDouble(num))
 				{
-					std::cout << 1 / acos(num) << std::endl;
+					std::cout << "acsc(" << num << ") = " << 1 / asin(num) << std::endl;
 				}
 				else
 				{
@@ -174,7 +179,7 @@ void trigMenu()
 			case 12:
 				if (getDouble(num))
 				{
-					std::cout << 1 / atan(num) << std::endl;
+					std::cout << "acot(" << num << ") = " << 1 / atan(num) << std::endl;
 				}
 				else
 				{
@@ -182,6 +187,9 @@ void trigMenu()
 				}
 				break;
 			case 13:
+				break;
+			default:
+				std::cout << "Please enter one of the options." << std::endl;
 				break;
 			}
 		}

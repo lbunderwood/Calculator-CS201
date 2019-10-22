@@ -14,7 +14,8 @@ int main()
 	{
 
 		//Main Menu that opens into submenus
-		std::cout << "Please select one of the following options:" << std::endl
+		std::cout << std::endl 
+			<< "Please select one of the following options:" << std::endl
 			<< "\t 1. Four-Function Calculator" << std::endl
 			<< "\t 2. Trigonometric Functions" << std::endl
 			<< "\t 3. Polynomials" << std::endl
