@@ -9,8 +9,9 @@
 int main()
 {
 	int menuchoice = 0;
+	Settings set;
 
-	while (menuchoice != 8)
+	while (menuchoice != 9)
 	{
 
 		//Main Menu that opens into submenus
@@ -23,7 +24,8 @@ int main()
 			<< "\t 5. Statistics" << std::endl
 			<< "\t 6. Vectors" << std::endl
 			<< "\t 7. Matrices" << std::endl
-			<< "\t 8. Exit" << std::endl;
+			<< "\t 8. Settings" << std::endl
+			<< "\t 9. Exit" << std::endl;
 
 		//Collects input and handles errors
 		if (getInt(menuchoice))
@@ -34,7 +36,7 @@ int main()
 				//Function Call Here
 				break;
 			case 2:
-				trigMenu();
+				trigMenu(set);
 				break;
 			case 3:
 				//Function Call Here
@@ -52,6 +54,9 @@ int main()
 				//Function Call Here
 				break;
 			case 8:
+				optionMenu(set);
+				break;
+			case 9:
 				break;
 			default:
 				std::cout << "Please enter one of the numbers listed." 
