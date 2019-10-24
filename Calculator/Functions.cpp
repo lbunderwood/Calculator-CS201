@@ -265,7 +265,7 @@ void optionMenu(Settings & set)
 					std::cout << std::fixed << std::setprecision(num);
 					set.floatnum = num;
 					std::cout << "There will now be " << num
-						<< "decimal places" << std::endl;
+						<< " decimal places" << std::endl;
 				}
 				else
 				{
