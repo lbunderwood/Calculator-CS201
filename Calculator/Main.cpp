@@ -15,13 +15,13 @@ int main()
 	{
 
 		//Main Menu that opens into submenus
-		std::cout << std::endl 
+		std::cout << std::endl
 			<< "Please select one of the following options:" << std::endl
 			<< "\t 1. Four-Function Calculator" << std::endl
 			<< "\t 2. Trigonometric Functions" << std::endl
 			<< "\t 3. Polynomials" << std::endl
 			<< "\t 4. Calculus" << std::endl
-			<< "\t 5. Statistics" << std::endl
+            << "\t 5. Combinatorics" << std::endl
 			<< "\t 6. Vectors" << std::endl
 			<< "\t 7. Matrices" << std::endl
 			<< "\t 8. Settings" << std::endl
@@ -45,7 +45,7 @@ int main()
 				//Function Call Here
 				break;
 			case 5:
-				//Function Call Here
+                    combinatoricsMenu();
 				break;
 			case 6:
 				//Function Call Here
@@ -59,7 +59,7 @@ int main()
 			case 9:
 				break;
 			default:
-				std::cout << "Please enter one of the numbers listed." 
+				std::cout << "Please enter one of the numbers listed."
 					<< std::endl;
 			}
 		}
