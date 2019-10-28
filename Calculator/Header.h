@@ -1,7 +1,7 @@
 //Luke Underwood
 //Created 10/9/19
 //Header.h
-//Contains library includsions and prototypes for
+//Contains library inclusions and prototypes for
 //CS201 calculator group project application
 
 
