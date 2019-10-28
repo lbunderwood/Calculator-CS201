@@ -35,7 +35,16 @@ bool getDouble(double& num)
 		return false;
 }
 
-void trigMenu()
+double degreesToRadians(double radians, const Settings& set)
+{
+	if (set.radians)
+		return radians;
+	else
+		return radians * M_PI / 180;
+}
+
+
+void trigMenu(const Settings& set)
 {
 	int menuchoice = 0;
 	double num;
@@ -65,8 +74,8 @@ void trigMenu()
 			case 1:
 				if (getDouble(num))
 				{
-					std::cout << "sin(" << num << ") = " << sin(num) 
-						<< std::endl;
+					std::cout << "sin(" << num << ") = " 
+						<< sin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -76,8 +85,8 @@ void trigMenu()
 			case 2:
 				if (getDouble(num))
 				{
-					std::cout << "cos(" << num << ") = " << cos(num)
-						<< std::endl;
+					std::cout << "cos(" << num << ") = " 
+						<< cos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -87,8 +96,8 @@ void trigMenu()
 			case 3:
 				if (getDouble(num))
 				{
-					std::cout << "tan(" << num << ") = " << tan(num)
-						<< std::endl;
+					std::cout << "tan(" << num << ") = " 
+						<< tan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -98,8 +107,8 @@ void trigMenu()
 			case 4:
 				if (getDouble(num))
 				{
-					std::cout << "sec(" << num << ") = " << 1 / cos(num)
-						<< std::endl;
+					std::cout << "sec(" << num << ") = " 
+						<< 1 / cos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -109,7 +118,8 @@ void trigMenu()
 			case 5:
 				if (getDouble(num))
 				{
-					std::cout << "csc(" << num << ") = " << 1 / sin(num) << std::endl;
+					std::cout << "csc(" << num << ") = " 
+						<< 1 / sin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -119,7 +129,8 @@ void trigMenu()
 			case 6:
 				if (getDouble(num))
 				{
-					std::cout << "cot(" << num << ") = " << 1 / tan(num) << std::endl;
+					std::cout << "cot(" << num << ") = " 
+						<< 1 / tan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -129,7 +140,8 @@ void trigMenu()
 			case 7:
 				if (getDouble(num))
 				{
-					std::cout << "asin(" << num << ") = " << asin(num) << std::endl;
+					std::cout << "asin(" << num << ") = " 
+						<< asin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -139,7 +151,8 @@ void trigMenu()
 			case 8:
 				if (getDouble(num))
 				{
-					std::cout << "acos(" << num << ") = " << acos(num) << std::endl;
+					std::cout << "acos(" << num << ") = " 
+						<< acos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -149,7 +162,8 @@ void trigMenu()
 			case 9:
 				if (getDouble(num))
 				{
-					std::cout << "atan(" << num << ") = " << atan(num) << std::endl;
+					std::cout << "atan(" << num << ") = " 
+						<< atan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -159,7 +173,8 @@ void trigMenu()
 			case 10:
 				if (getDouble(num))
 				{
-					std::cout << "asec(" << num << ") = " << 1 / acos(num) << std::endl;
+					std::cout << "asec(" << num << ") = " 
+						<< 1 / acos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -169,7 +184,8 @@ void trigMenu()
 			case 11:
 				if (getDouble(num))
 				{
-					std::cout << "acsc(" << num << ") = " << 1 / asin(num) << std::endl;
+					std::cout << "acsc(" << num << ") = " 
+						<< 1 / asin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -179,7 +195,8 @@ void trigMenu()
 			case 12:
 				if (getDouble(num))
 				{
-					std::cout << "acot(" << num << ") = " << 1 / atan(num) << std::endl;
+					std::cout << "acot(" << num << ") = " 
+						<< 1 / atan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
 				{
@@ -199,3 +216,249 @@ void trigMenu()
 		}
 	}
 }
+
+
+void optionMenu(Settings & set)
+{
+	int menuchoice = 0;
+	int num;
+	std::string choice;
+
+	while (menuchoice != 4)
+	{
+		std::cout << std::endl
+			<< "Please select one of the following options:" << std::endl
+			<< "\t 1. Radians/Degrees" << std::endl
+			<< "\t 2. Floating point ammount" << std::endl
+			<< "\t 3. Normal/Scientific" << std::endl
+			<< "\t 4. Exit" << std::endl;
+
+		//Collects input and handles errors
+		if (getInt(menuchoice))
+		{
+			switch (menuchoice)
+			{
+			case 1:
+				std::cout << "Please type \"R\" for radians, or "
+					<< "\"D\" for degrees: ";
+				getline(std::cin, choice);
+				if (choice == "R" || choice == "r")
+				{
+					set.radians = true;
+					std::cout << "You are now in radians mode" << std::endl;
+				}
+				else if (choice == "D" || choice == "d")
+				{
+					set.radians = false;
+					std::cout << "You are now in degrees mode" << std::endl;
+				}
+				else
+				{
+					std::cout << "Unrecognized input. Please try again." 
+						<< std::endl;
+				}
+				break;
+			case 2:
+				std::cout << "Please enter the number of digits you would"
+					<< " like to have after the decimal: " << std::endl;
+				if (getInt(num))
+				{
+					std::cout << std::fixed << std::setprecision(num);
+					set.floatnum = num;
+					std::cout << "There will now be " << num
+						<< " decimal places" << std::endl;
+				}
+				else
+				{
+					std::cout << "Please enter an integer.";
+				}
+				break;
+			case 3:
+				std::cout << "Please type \"N\" for normal, or "
+					<< "\"S\" for scientific: ";
+				getline(std::cin, choice);
+				if (choice == "N" || choice == "n")
+				{
+					set.scientific = false;
+					std::cout << std::fixed << "You are now in normal mode" << std::endl;
+				}
+				else if (choice == "S" || choice == "s")
+				{
+					set.scientific = true;
+					std::cout << std::scientific << "You are now in scientific mode" << std::endl;
+				}
+				else
+				{
+					std::cout << "Unrecognized input. Please try again."
+						<< std::endl;
+				}
+				break;
+			case 4:
+				break;
+			default:
+				std::cout << "Please enter one of the numbers listed."
+					<< std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "Please enter an integer." << std::endl;
+			continue;
+		}
+	}
+
+}
+
+
+    int multiply(int x, int res[], int res_size){
+        int carry = 0;  // Initialize carry
+      
+        // One by one multiply n with individual digits of res[]
+        for (int i=0; i<res_size; i++)
+        {
+            int prod = res[i] * x + carry;
+      
+            // Store last digit of 'prod' in res[]
+            res[i] = prod % 10;
+      
+            // Put rest in carry
+            carry  = prod/10;
+        }
+      
+        // Put carry in res and increase result size
+        while (carry)
+        {
+            res[res_size] = carry%10;
+            carry = carry/10;
+            res_size++;
+        }
+        return res_size;
+    }
+    
+
+
+    bool getFloat(float & num)
+    {
+        std::string input;
+
+        getline(std::cin, input);
+        std::istringstream instream(input);
+        instream >> num;
+
+        if (instream)
+            return true;
+        else
+            return false;
+    }
+
+
+    
+    void combinatoricsMenu(){
+        int menuchoice = 0;
+        float num1;
+        float num2;
+        int num3;
+        int res[500];
+        
+        // Function for paramaters will probably use getint
+
+        while (menuchoice != 10)
+        {
+            std::cout << std::endl
+                << "Please select one of the following options:" << std::endl
+                << "\t 1.  Permuatation" << std::endl
+                << "\t 2.  Combination" << std::endl
+                << "\t 3.  K-list" << std::endl
+                << "\t 4.  Multiset" << std::endl
+                << "\t 5.  Stirling-Number" << std::endl
+                << "\t 6.  Sum Stirling-Number" << std::endl
+                << "\t 7.  Bell Number" << std::endl
+                << "\t 8.  Partitions of an Integer" << std::endl
+                << "\t 9.  Sum Partitions of an Integer" << std::endl
+                << "\t 10. Exit" << std::endl;
+
+            if (getInt(menuchoice))
+            {
+                switch (menuchoice)
+                {
+                case 1:
+                        std::cout << "Please enter an integer." << std::endl;
+                        if ( getInt(num3)){
+                             
+                                    // Initialize result
+                                    res[0] = 1;
+                                    int res_size = 1;
+                                  
+                                    // Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
+                                    for (int x = 2; x<= num3 ; x++)
+                                        res_size = multiply(x, res, res_size);
+                                  
+                                    std::cout << num3 <<"! is: ";
+                                    for (int i=res_size-1; i>=0; i--)
+                                        std::cout << res[i];
+                            }
+                        else
+                            {
+                                    std::cout << "Please enter an integer." << std::endl;
+                            }
+                    
+                        //permutation paramaters int
+                    break;
+                        
+                case 2:
+                        std::cout << "Please enter 2 integers" << std::endl;
+                        if (getFloat(num1) && getFloat(num2))
+                            {
+                            float result = num1;
+                                for(int i = 2; i <= num2; ++i )
+                                {
+                                   result *= (num1 - i + 1);
+                                   result /= i;
+                                }
+                            std::cout << num1 << " choose " << num2 <<" is "<<   result  << std::endl;
+                            }
+                        else
+                            {
+                                std::cout << "Please enter 2 integers." << std::endl;
+                            }
+                    break;
+               
+                case 3:
+                 // K list paramaters 2 ints
+                    break;
+                    
+                case 4:
+                  // Multiset pramaters 2 ints
+                    break;
+                case 5:
+                //stirling number paramaters 2 ints
+                    break;
+                case 6:
+                             //sum stirling number paramaters 2 ints
+                    break;
+                case 7:
+                  // bell number paramater 1 int
+                    break;
+                case 8:
+                  // partitions of an integer paramaters 2 ints
+                    break;
+                case 9:
+                 // sum partitions of an integer paramates 2 ints
+                    break;
+                case 10:
+                    break;
+                default:
+                    std::cout << "Please enter one of the options." << std::endl;
+                    break;
+                }
+            }
+            else
+            {
+                std::cout << "Please enter an integer." << std::endl;
+            }
+        }
+    }
+
+
+
+
