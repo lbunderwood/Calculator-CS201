@@ -80,6 +80,7 @@ unsigned StringToTokensWS(vector<string>& tokens, string& str)
 
 // 15 + (sin(50)*-4) / ln(4^2) - -7.3
 // 5^(ln(5*(2-0.75)/23))-13
+// sin(cos(tan(ln((4+(3*2))^2))))
 //  0 1 2  3  4  5 6 7  8 9 1011121314151617 18
 
 void EvaluateTokens(vector<string>& tokens) {
