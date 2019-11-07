@@ -45,21 +45,21 @@ double degreesToRadians(double radians, const Settings& set)
 
 
     int multiply(int x, int res[], int res_size){
-        int carry = 0;  // Initialize carry
+        int carry = 0;
       
-        // One by one multiply n with individual digits of res[]
+        // Multiplying n by each digit in result
         for (int i=0; i<res_size; i++)
         {
             int prod = res[i] * x + carry;
       
-            // Store last digit of 'prod' in res[]
+            //Rewriting result array for new result, storing the last digit of prod
             res[i] = prod % 10;
       
-            // Put rest in carry
+            // we want to carry whhats left into the next digit
             carry  = prod/10;
         }
       
-        // Put carry in res and increase result size
+        // This makes sure our result array is the right size
         while (carry)
         {
             res[res_size] = carry%10;

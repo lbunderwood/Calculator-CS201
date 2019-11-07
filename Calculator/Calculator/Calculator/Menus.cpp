@@ -309,7 +309,7 @@ void combinatoricsMenu() {
 					res[0] = 1;
 					int res_size = 1;
 
-					// Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
+					// Factorial formula n! = 1 * 2 * 3 * 4...*n
 					for (int x = 2; x <= num3; x++)
 						res_size = multiply(x, res, res_size);
 
@@ -364,17 +364,27 @@ void combinatoricsMenu() {
                                     std::cout << "Please enter an integer." << std::endl;
                                 }
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
 				// K list paramaters 2 ints
 				break;
 
 			case 4:
+                    
+                    std::cout << "Please enter 2 integers" << std::endl;
+                    if (getFloat(num1) && getFloat(num2))
+                    {
+                        float result = num1 + num2 - 1;
+                        for (int i = 2; i <= num2; ++i)
+                        {
+                            result *= (num1 - i + 1);
+                            result /= i;
+                        }
+                        std::cout << num1 << " multi-choose " << num2 << " is " << result << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "Please enter 2 integers." << std::endl;
+                    }
+                    
 				// Multiset pramaters 2 ints
 				break;
 			case 5:
