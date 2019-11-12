@@ -47,7 +47,9 @@ bool getDouble(double& num);
 bool getFloat(float & num);
 
 
-
+//Concatonates a string that holds the vector of doubles in proper 
+//notation, then sends the string to cout.
+void printVector(std::vector<double> vector);
 
 
 //Converts degrees to radians but only if we're in degrees mode
@@ -56,6 +58,9 @@ double degreesToRadians(double radians, const Settings& set);
 //Contains menu of trig functions and allows the user to
 //use all of them
 void trigMenu(const Settings& set);
+
+//Menu for vector operations
+void vectorMenu(const Settings& set);
 
 //Menu for combinatorial operations.
 void combinatoricsMenu();

@@ -35,6 +35,18 @@ bool getDouble(double& num)
 		return false;
 }
 
+void printVector(std::vector<double> vector)
+{
+	std::string vecStr = "< ";
+	for (auto n : vector)
+	{
+		vecStr += std::to_string(n) + ", ";
+	}
+	vecStr.erase(vecStr.size() - 3, vecStr.size() - 1);
+	vecStr += " >";
+	std::cout << vecStr;
+}
+
 double degreesToRadians(double radians, const Settings& set)
 {
 	if (set.radians)
@@ -67,7 +79,7 @@ double degreesToRadians(double radians, const Settings& set)
             res_size++;
         }
         return res_size;
-    }
+	}
     
 
 

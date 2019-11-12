@@ -377,3 +377,122 @@ void combinatoricsMenu() {
 		}
 	}
 }
+
+
+void vectorMenu(const Settings& set)
+{
+	int menuchoice = 0;
+	int vecNum = 0;
+	int vecPlaces = 0;
+	double vecElement;
+	std::string vecStr;
+	std::vector<std::vector<double>> vecVec;
+
+	while (menuchoice != 5)
+	{
+		std::cout << std::endl
+			<< "Please select one of the following options:" << std::endl
+			<< "\t 1. Dot Product" << std::endl
+			<< "\t 2. Cross Product" << std::endl
+			<< "\t 3. Add Vectors" << std::endl
+			<< "\t 4. Subtract Vectors" << std::endl
+			<< "\t 5. Exit" << std::endl;
+
+		//Collects input and handles errors
+		if (getInt(menuchoice))
+		{
+			switch (menuchoice)
+			{
+			case 1:
+				std::cout << "How many elements are in each vector?";
+				if (getInt(vecPlaces))
+				{
+					for (auto i = 1; i <= 2; i++)
+					{
+						for (auto j = 1; j <= vecPlaces; j++)
+						{
+							std::cout << "What is element " << j
+								<< " in vector " << i << "?\n";
+							if (getDouble(vecElement))
+							{
+								vecVec[i].push_back(vecElement);
+							}
+							else
+							{
+								while (!getDouble(vecElement))
+								{
+									std::cout << "Bad input. "
+										<<"Please enter a number\n";
+								}
+								vecVec[i].push_back(vecElement);
+							}
+						}
+					}
+					
+					for (auto n : vecVec)
+					{
+						printVector(n);
+					}
+				}
+				else
+				{
+					std::cout << "Please enter an integer\n";
+				}
+				break;
+			case 2:
+				std::cout << "Please enter the number of digits you would"
+					<< " like to have after the decimal: " << std::endl;
+				if (getInt(num))
+				{
+					std::cout << std::fixed << std::setprecision(num);
+					set.floatnum = num;
+					std::cout << "There will now be " << num
+						<< " decimal places" << std::endl;
+				}
+				else
+				{
+					std::cout << "Please enter an integer.";
+				}
+				break;
+			case 3:
+				std::cout << "How many vectors are you adding?";
+				if (getInt(vecNum))
+				{
+					std::cout << "How many elements are in each vector?";
+					if (getInt(vecPlaces))
+					{
+						for (auto i = 1; i <= vecNum; i++)
+						{
+							for (auto j = 1; j <= vecPlaces; j++)
+							{
+								std::cout << "What is element " << j
+									<< " in vector " << i << "?\n";
+								if (getDouble(vecElement))
+								{
+									vecVec[i].push_back(vecElement);
+								}
+								else
+								{
+									while (!getDouble(vecElement))
+										std::cout << "BAD INPUT"
+								}
+							}
+						}
+					}
+				}
+				break;
+			case 4:
+				break;
+			default:
+				std::cout << "Please enter one of the numbers listed."
+					<< std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "Please enter an integer." << std::endl;
+			continue;
+		}
+	}
+
+}
