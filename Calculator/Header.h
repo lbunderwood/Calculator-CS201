@@ -56,7 +56,7 @@ std::vector<std::vector<double>> populateVectors(int vecNum, int vecPlaces);
 
 //Concatonates a string that holds the vector of doubles in proper 
 //notation, then sends the string to cout.
-void printVector(std::vector<double> vector, const Settings& set);
+void printVector(std::vector<double> vector);
 
 //Converts degrees to radians but only if we're in degrees mode
 double degreesToRadians(double radians, const Settings& set);

@@ -384,53 +384,56 @@ void vectorMenu(const Settings& set)
 	int menuchoice = 0;
 	int vecNum = 0;
 	int vecPlaces = 0;
-	double vecElement;
-	std::string vecStr;
 	std::vector<std::vector<double>> vecVec;
 
-	while (menuchoice != 5)
+	while (menuchoice != 8)
 	{
 		std::cout << std::endl
 			<< "Please select one of the following options:" << std::endl
-			<< "\t 1. Dot Product" << std::endl
-			<< "\t 2. Cross Product" << std::endl
-			<< "\t 3. Add Vectors" << std::endl
-			<< "\t 4. Scalar Triple Product" << std::endl
-			<< "\t 5. Exit" << std::endl;
+			<< "\t 1. Find the Magnitude" << std::endl
+			<< "\t 2. Add Vectors" << std::endl
+			<< "\t 3. Scalar Multiplication" << std::endl
+			<< "\t 4. Dot Product" << std::endl
+			<< "\t 5. Cross Product" << std::endl
+			<< "\t 6. Scalar Triple Product" << std::endl
+			<< "\t 7. Normalize the Vector" << std::endl
+			<< "\t 8. Exit" << std::endl;
 
 		//Collects input and handles errors
 		if (getInt(menuchoice))
 		{
 			switch (menuchoice)
 			{
+
+			//Magnitude
 			case 1:
-				vecNum = 2;
-				std::cout << "How many elements are in each vector?" 
+				vecNum = 1;
+				std::cout << "How many elements are in the vector?"
 					<< std::endl;
 				if (getInt(vecPlaces))
 				{
 					vecVec = populateVectors(vecNum, vecPlaces);
 
-					printVector(vecVec[0], set);
-					std::cout << " DOT ";
-					printVector(vecVec[1], set);
+					std::cout << "|| ";
+					printVector(vecVec[0]);
+					std::cout << " ||";
 					std::cout << std::endl;
-					double dotAns = 0;
+					double magnitude = 0;
 					for (size_t i = 0; i < vecVec[0].size(); i++)
 					{
-						dotAns += vecVec[0][i] * vecVec[1][i];
+						magnitude += pow(vecVec[0][i], 2);
 					}
-					std::cout << " = " << dotAns << std::endl;
+					magnitude = pow(magnitude, 0.5);
+					std::cout << " = " << magnitude << std::endl;
 				}
 				else
 				{
 					std::cout << "Please enter an integer\n";
 				}
 				break;
+
+			//Addition
 			case 2:
-				std::cout << "Work In Progress\n";
-				break;
-			case 3:
 				std::cout << "How many vectors are you adding?\n";
 				if (getInt(vecNum))
 				{
@@ -442,7 +445,7 @@ void vectorMenu(const Settings& set)
 
 						for (auto n : vecVec)
 						{
-							printVector(n, set);
+							printVector(n);
 							if (n != vecVec.back())
 							{
 								std::cout << " + ";
@@ -458,7 +461,7 @@ void vectorMenu(const Settings& set)
 							}
 						}
 						std::cout << " = ";
-						printVector(addAns, set);
+						printVector(addAns);
 					}
 					else
 					{
@@ -470,7 +473,79 @@ void vectorMenu(const Settings& set)
 					std::cout << "Please enter an integer.\n";
 				}
 				break;
+
+			//Scalar Multiplication
+			case 3:
+				vecNum = 1;
+				std::cout << "How many elements are in the vector?"
+					<< std::endl;
+				if (getInt(vecPlaces))
+				{
+					vecVec = populateVectors(vecNum, vecPlaces);
+
+					std::cout << "What are you multiplying by?";
+					std::cout << std::endl;
+					double scalar;
+					if (!getDouble(scalar))
+					{
+						std::cout << "Bad input. Please enter a number\n";
+						while (!getDouble(scalar))
+						{
+							std::cout << "Bad input. Please enter a number\n";
+						}
+					}
+					std::cout << scalar << " * ";
+					printVector(vecVec[0]);
+					std::cout << std::endl;
+
+					std::vector<double> scaled(vecPlaces, 0);
+					for (int i = 0; i < vecPlaces; i++)
+					{
+						scaled[i] = vecVec[0][i] * scalar;
+					}
+					std::cout << " = ";
+					printVector(scaled);
+					std::cout << std::endl;
+				}
+				else
+				{
+					std::cout << "Please enter an integer\n";
+				}
+				break;
+
+			//Dot Product
 			case 4:
+				vecNum = 2;
+				std::cout << "How many elements are in each vector?" 
+					<< std::endl;
+				if (getInt(vecPlaces))
+				{
+					vecVec = populateVectors(vecNum, vecPlaces);
+
+					printVector(vecVec[0]);
+					std::cout << " DOT ";
+					printVector(vecVec[1]);
+					std::cout << std::endl;
+					double dotAns = 0;
+					for (size_t i = 0; i < vecVec[0].size(); i++)
+					{
+						dotAns += vecVec[0][i] * vecVec[1][i];
+					}
+					std::cout << " = " << dotAns << std::endl;
+				}
+				else
+				{
+					std::cout << "Please enter an integer\n";
+				}
+				break;
+
+			//Cross Product
+			case 5:
+				std::cout << "Work In Progress\n";
+				break;
+
+			//Triple Product
+			case 6:
 			{
 				vecNum = 3;
 				vecPlaces = 3;
@@ -481,11 +556,11 @@ void vectorMenu(const Settings& set)
 				vecVec = populateVectors(vecNum, vecPlaces);
 
 				std::cout << "( ";
-				printVector(vecVec[0], set);
+				printVector(vecVec[0]);
 				std::cout << " X ";
-				printVector(vecVec[1], set);
+				printVector(vecVec[1]);
 				std::cout << " ) DOT ";
-				printVector(vecVec[2], set);
+				printVector(vecVec[2]);
 				std::cout << std::endl;
 
 				std::vector<double> crossAns(vecPlaces, 0);
@@ -501,7 +576,42 @@ void vectorMenu(const Settings& set)
 				std::cout << " = " << std::to_string(dotAns) << std::endl;
 				break;
 			}
-			case 5:
+
+			//Normalize
+			case 7:
+				vecNum = 1;
+				std::cout << "How many elements are in the vector?"
+					<< std::endl;
+				if (getInt(vecPlaces))
+				{
+					vecVec = populateVectors(vecNum, vecPlaces);
+
+					double scalar = 0;
+					for (size_t i = 0; i < vecVec[0].size(); i++)
+					{
+						scalar += pow(vecVec[0][i], 2);
+					}
+					scalar = pow(scalar, 0.5);
+
+					printVector(vecVec[0]);
+					std::cout << " / " << scalar;
+					std::cout << std::endl;
+
+					std::vector<double> scaled(vecPlaces, 0);
+					for (int i = 0; i < vecPlaces; i++)
+					{
+						scaled[i] = vecVec[0][i] / scalar;
+					}
+					std::cout << " = ";
+					printVector(scaled);
+					std::cout << std::endl;
+				}
+				else
+				{
+					std::cout << "Please enter an integer\n";
+				}
+				break;
+			case 8:
 				break;
 			default:
 				std::cout << "Please enter one of the numbers listed."
