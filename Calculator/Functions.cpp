@@ -47,6 +47,11 @@ void printVector(std::vector<double> vector)
 	std::cout << vecStr;
 }
 
+std::vector<std::vector<double>> makeMatrix(int num)
+{
+	return std::vector<std::vector<double>> (num);
+}
+
 double degreesToRadians(double radians, const Settings& set)
 {
 	if (set.radians)

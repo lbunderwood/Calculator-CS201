@@ -48,7 +48,7 @@ int main()
                     combinatoricsMenu();
 				break;
 			case 6:
-				//Function Call Here
+				vectorMenu(set);
 				break;
 			case 7:
 				//Function Call Here

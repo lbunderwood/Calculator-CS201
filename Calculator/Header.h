@@ -40,20 +40,26 @@ bool getInt(int& num);
 //returns double by reference
 bool getDouble(double& num);
 
-
 //Collects a line of text from the user.
 //returns whether it was a number
 //returns float by reference
 bool getFloat(float & num);
 
+//return a new vector of vectors of doubles with num vectors in it
+//useful for setting up the vector used in vectorMenu
+std::vector<std::vector<double>> makeMatrix(int num);
 
 //Concatonates a string that holds the vector of doubles in proper 
 //notation, then sends the string to cout.
 void printVector(std::vector<double> vector);
 
-
 //Converts degrees to radians but only if we're in degrees mode
 double degreesToRadians(double radians, const Settings& set);
+
+//Funciton that allows multiplication of extremely large integers through array representation.
+int multiply(int x, int res[], int res_size);
+
+
 
 //Contains menu of trig functions and allows the user to
 //use all of them
@@ -64,9 +70,6 @@ void vectorMenu(const Settings& set);
 
 //Menu for combinatorial operations.
 void combinatoricsMenu();
-
-//Funciton that allows multiplication of extremely large integers through array representation.
-int multiply(int x, int res[], int res_size);
 
 //Allows the user to change various settings
 //Radians/degrees, scientific/fixed, etc
