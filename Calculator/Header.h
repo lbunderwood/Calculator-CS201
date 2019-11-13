@@ -46,12 +46,17 @@ bool getDouble(double& num);
 bool getFloat(float & num);
 
 //return a new vector of vectors of doubles with num vectors in it
-//useful for setting up the vector used in vectorMenu
+//original use was for setting up the vector used in vectorMenu
+//but it is not being used anymore
 std::vector<std::vector<double>> makeMatrix(int num);
+
+//Used to collect data from the user to fill vecNum vectors with vecPlaces
+//elements
+std::vector<std::vector<double>> populateVectors(int vecNum, int vecPlaces);
 
 //Concatonates a string that holds the vector of doubles in proper 
 //notation, then sends the string to cout.
-void printVector(std::vector<double> vector);
+void printVector(std::vector<double> vector, const Settings& set);
 
 //Converts degrees to radians but only if we're in degrees mode
 double degreesToRadians(double radians, const Settings& set);

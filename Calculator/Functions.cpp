@@ -35,21 +35,53 @@ bool getDouble(double& num)
 		return false;
 }
 
-void printVector(std::vector<double> vector)
+void printVector(std::vector<double> vector, const Settings& set)
 {
-	std::string vecStr = "< ";
-	for (auto n : vector)
+	std::cout << "< ";
+	for (size_t i = 0; i < vector.size(); i++)
 	{
-		vecStr += std::to_string(n) + ", ";
+		std::cout << vector[i];
+		if (i != vector.size() - 1)
+		{
+			std::cout << ", ";
+		}
 	}
-	vecStr.erase(vecStr.size() - 3, vecStr.size() - 1);
-	vecStr += " >";
-	std::cout << vecStr;
+	std::cout << " >";
 }
 
 std::vector<std::vector<double>> makeMatrix(int num)
 {
 	return std::vector<std::vector<double>> (num);
+}
+
+std::vector<std::vector<double>> populateVectors(int vecNum, int vecPlaces)
+{
+	std::vector<std::vector<double>> vecVec (vecNum);
+	double vecElement = 0;
+	for (auto i = 0; i < vecNum; i++)
+	{
+		for (auto j = 0; j < vecPlaces; j++)
+		{
+			std::cout << "What is element " << j + 1
+				<< " in vector " << i + 1 << "?\n";
+			if (getDouble(vecElement))
+			{
+				vecVec[i].push_back(vecElement);
+			}
+			else
+			{
+				std::cout << "Bad input. "
+					<< "Please enter a number\n";
+				while (!getDouble(vecElement))
+				{
+					std::cout << "Bad input. "
+						<< "Please enter a number\n";
+				}
+				vecVec[i].push_back(vecElement);
+			}
+		}
+	}
+	return vecVec;
 }
 
 double degreesToRadians(double radians, const Settings& set)

@@ -404,45 +404,23 @@ void vectorMenu(const Settings& set)
 			switch (menuchoice)
 			{
 			case 1:
-				vecVec = makeMatrix(2);
+				vecNum = 2;
 				std::cout << "How many elements are in each vector?" 
 					<< std::endl;
 				if (getInt(vecPlaces))
 				{
-					for (auto i = 0; i < 2; i++)
-					{
-						for (auto j = 0; j < vecPlaces; j++)
-						{
-							std::cout << "What is element " << j + 1
-								<< " in vector " << i + 1 << "?\n";
-							if (getDouble(vecElement))
-							{
-								vecVec[i].push_back(vecElement);
-							}
-							else
-							{
-								std::cout << "Bad input. "
-									<< "Please enter a number\n";
-								while (!getDouble(vecElement))
-								{
-									std::cout << "Bad input. "
-										<<"Please enter a number\n";
-								}
-								vecVec[i].push_back(vecElement);
-							}
-						}
-					}
-					
-					printVector(vecVec[0]);
+					vecVec = populateVectors(vecNum, vecPlaces);
+
+					printVector(vecVec[0], set);
 					std::cout << " DOT ";
-					printVector(vecVec[1]);
+					printVector(vecVec[1], set);
 					std::cout << std::endl;
 					double dotAns = 0;
 					for (size_t i = 0; i < vecVec[0].size(); i++)
 					{
 						dotAns += vecVec[0][i] * vecVec[1][i];
 					}
-					std::cout << " = " << std::to_string(dotAns) << std::endl;
+					std::cout << " = " << dotAns << std::endl;
 				}
 				else
 				{
@@ -460,33 +438,11 @@ void vectorMenu(const Settings& set)
 					std::cout << "How many elements are in each vector?\n";
 					if (getInt(vecPlaces))
 					{
-						for (auto i = 0; i < vecNum; i++)
-						{
-							for (auto j = 0; j < vecPlaces; j++)
-							{
-								std::cout << "What is element " << j + 1
-									<< " in vector " << i + 1 << "?\n";
-								if (getDouble(vecElement))
-								{
-									vecVec[i].push_back(vecElement);
-								}
-								else
-								{
-									std::cout << "Bad input. "
-										<< "Please enter a number\n";
-									while (!getDouble(vecElement))
-									{
-										std::cout << "Bad input. "
-											<< "Please enter a number\n";
-									}
-									vecVec[i].push_back(vecElement);
-								}
-							}
-						}
+						vecVec = populateVectors(vecNum, vecPlaces);
 
 						for (auto n : vecVec)
 						{
-							printVector(n);
+							printVector(n, set);
 							if (n != vecVec.back())
 							{
 								std::cout << " + ";
@@ -502,7 +458,7 @@ void vectorMenu(const Settings& set)
 							}
 						}
 						std::cout << " = ";
-						printVector(addAns);
+						printVector(addAns, set);
 					}
 					else
 					{
@@ -515,54 +471,36 @@ void vectorMenu(const Settings& set)
 				}
 				break;
 			case 4:
-				vecVec = makeMatrix(3);
-				std::cout << "How many elements are in each vector?"
+			{
+				vecNum = 3;
+				vecPlaces = 3;
+				std::cout << "The first two vectors will be crossed, and"
+					<< " the result will be dotted with the third vector."
 					<< std::endl;
-				if (getInt(vecPlaces))
-				{
-					std::cout << "The first two vectors will be crossed, and"
-						<< " the result will be dotted with the third vector."
-						<< std::endl;
-					for (auto i = 0; i < 3; i++)
-					{
-						for (auto j = 0; j < vecPlaces; j++)
-						{
-							std::cout << "What is element " << j + 1
-								<< " in vector " << i + 1 << "?\n";
-							if (getDouble(vecElement))
-							{
-								vecVec[i].push_back(vecElement);
-							}
-							else
-							{
-								std::cout << "Bad input. "
-									<< "Please enter a number\n";
-								while (!getDouble(vecElement))
-								{
-									std::cout << "Bad input. "
-										<< "Please enter a number\n";
-								}
-								vecVec[i].push_back(vecElement);
-							}
-						}
-					}
 
-					printVector(vecVec[0]);
-					std::cout << " DOT ";
-					printVector(vecVec[1]);
-					std::cout << std::endl;
-					double dotAns = 0;
-					for (size_t i = 0; i < vecVec[0].size(); i++)
-					{
-						dotAns += vecVec[0][i] * vecVec[1][i];
-					}
-					std::cout << " = " << std::to_string(dotAns) << std::endl;
-				}
-				else
+				vecVec = populateVectors(vecNum, vecPlaces);
+
+				std::cout << "( ";
+				printVector(vecVec[0], set);
+				std::cout << " X ";
+				printVector(vecVec[1], set);
+				std::cout << " ) DOT ";
+				printVector(vecVec[2], set);
+				std::cout << std::endl;
+
+				std::vector<double> crossAns(vecPlaces, 0);
+				crossAns[0] = vecVec[0][1] * vecVec[1][2] - vecVec[1][1] * vecVec[0][2];
+				crossAns[1] = (vecVec[0][0] * vecVec[1][2] - vecVec[1][0] * vecVec[0][2]) * -1;
+				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0] * vecVec[0][1];
+
+				double dotAns = 0;
+				for (size_t i = 0; i < vecPlaces; i++)
 				{
-					std::cout << "Please enter an integer\n";
+					dotAns += vecVec[2][i] * crossAns[i];
 				}
+				std::cout << " = " << std::to_string(dotAns) << std::endl;
 				break;
+			}
 			case 5:
 				break;
 			default:
