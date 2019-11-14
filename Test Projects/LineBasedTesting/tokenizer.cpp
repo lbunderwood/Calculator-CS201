@@ -11,6 +11,7 @@
 #include <vector>
 #include <cctype>
 #include "tokenizer.h"
+#include <cmath>
 
 using std::cin;
 using std::cout;
@@ -103,9 +104,9 @@ void EvaluateTokens(vector<string>& tokens) {
 					continue;
 				}
 				if (tokens[j] == ")") {
-					// EvalInside(i, j);
+					long double result = EvalInside(i, j, tokens);
 					tokens.erase(tokens.begin() + i, tokens.begin() + j + 1);
-					tokens.insert(tokens.begin() + i, "VALUE"); //EvalInside(i, j));
+					tokens.insert(tokens.begin() + i, std::to_string(result)); //EvalInside(i, j));
 					if (num > 0) {
 						--num;
 					}
@@ -116,16 +117,243 @@ void EvaluateTokens(vector<string>& tokens) {
 					for (const auto& s : tokens) {
 						cout << s << " ";
 					}
-					cout << endl;
 					break;
 				}
 			}
 		}
 	}
+	long double r = EvalInside(0, tokens.size(), tokens);
+	cout << r << endl;
 }
 
-void EvalInside(const size_t& left, const size_t& right) {
-	vector<int> integers;
+long double EvalInside(const size_t& left, const size_t& right, vector<string>& tokens) {
+	vector<string> op;
+	vector<long double> numbers;
+	for (size_t i = left; i < right; ++i) {
+		istringstream is(tokens[i]);
+		long double num;
+		if (is >> num) {
+			op.push_back("null");
+			numbers.push_back(num);
+		}
+		else if (tokens[i] != "(" && tokens[i] != ")") {
+			op.push_back(tokens[i]);
+			numbers.push_back('x');
+		}
+	}
+	cout << endl;
+	for (const auto s : op) {
+		cout << s << " ";
+	}
+	cout << endl;
+	for (const auto n : numbers) {
+		cout << n << " ";
+	}
+	cout << endl;
+
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "sin") {
+			long double result = sin(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "cos") {
+			long double result = cos(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "tan") {
+			long double result = tan(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "ln") {
+			long double result = log(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "^") {
+			long double result = pow(numbers[i - 1], numbers[i + 1]);
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		// 15 + (sin(50)*-4) / ln(4^2) - -7.3
+		if (op[i] == "*") {
+			long double result = numbers[i - 1] * numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "/") {
+			long double result = numbers[i - 1] / numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "+") {
+			long double result = numbers[i - 1] + numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "-") {
+			long double result = numbers[i - 1] - numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	return numbers[0];
+}
+
+void EvaluateTokens2(vector<string>& tokens)
+{
+
 }
 
 // performs various checks on tokens, prints them with determined type of token

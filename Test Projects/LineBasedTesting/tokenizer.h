@@ -19,7 +19,9 @@ unsigned StringToTokensWS(std::vector<std::string>& tokens, std::string& str);
 
 void EvaluateTokens(std::vector<std::string>& tokens);
 
-void EvalInside(const size_t& left, const size_t& right);
+long double EvalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens);
+
+void EvaluateTokens2(std::vector<std::string>& tokens);
 
 void AnalyzeTokens(const std::vector<std::string>& tokens);
 
