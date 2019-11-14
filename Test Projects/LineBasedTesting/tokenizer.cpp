@@ -117,6 +117,7 @@ void EvaluateTokens(vector<string>& tokens) {
 					for (const auto& s : tokens) {
 						cout << s << " ";
 					}
+					cout << endl;
 					break;
 				}
 			}
@@ -141,6 +142,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 			numbers.push_back('x');
 		}
 	}
+	/*
 	cout << endl;
 	for (const auto s : op) {
 		cout << s << " ";
@@ -150,13 +152,14 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 		cout << n << " ";
 	}
 	cout << endl;
-
+	*/
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "sin") {
 			long double result = sin(numbers[i + 1]);
 			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
 			op.erase(op.begin() + i, op.begin() + i + 1);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -166,7 +169,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
@@ -176,6 +179,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
 			op.erase(op.begin() + i, op.begin() + i + 1);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -185,7 +189,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
@@ -195,6 +199,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
 			op.erase(op.begin() + i, op.begin() + i + 1);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -204,7 +209,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
@@ -214,6 +219,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
 			op.erase(op.begin() + i, op.begin() + i + 1);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -223,7 +229,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
@@ -238,6 +244,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				numbers.insert(numbers.begin() + i - 1, result);
 			}
 			op.erase(op.begin() + i, op.begin() + i + 2);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -247,12 +254,11 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
-		// 15 + (sin(50)*-4) / ln(4^2) - -7.3
 		if (op[i] == "*") {
 			long double result = numbers[i - 1] * numbers[i + 1];
 			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
@@ -263,6 +269,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				numbers.insert(numbers.begin() + i - 1, result);
 			}
 			op.erase(op.begin() + i, op.begin() + i + 2);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -272,7 +279,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
@@ -287,6 +294,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				numbers.insert(numbers.begin() + i - 1, result);
 			}
 			op.erase(op.begin() + i, op.begin() + i + 2);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -296,7 +304,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
@@ -311,6 +319,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				numbers.insert(numbers.begin() + i - 1, result);
 			}
 			op.erase(op.begin() + i, op.begin() + i + 2);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -320,7 +329,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
@@ -335,6 +344,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				numbers.insert(numbers.begin() + i - 1, result);
 			}
 			op.erase(op.begin() + i, op.begin() + i + 2);
+			/*
 			cout << endl;
 			for (const auto s : op) {
 				cout << s << " ";
@@ -344,7 +354,7 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 				cout << n << " ";
 			}
 			cout << endl;
-
+			*/
 			i = 0;
 		}
 	}
