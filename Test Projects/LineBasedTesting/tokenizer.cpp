@@ -44,12 +44,16 @@ unsigned StringToTokensWS(vector<string>& tokens, string& str)
 	string empty;
 	unsigned tokenCounter = 1;
 	for (size_t i = 0; i < str.size(); ++i) {
-		for (size_t j = i + 1; j <= str.size(); ++j) {
+		for (size_t j = i; j <= str.size(); ++j) {
 			if (str[i] == '-' && str[j] == '-') {
 				tokens.push_back(str.substr(i, j - i));
 				i = j;
 			}
-			if ((isdigit(str[i]) || str[i] == '-' || str[i] == '.') && (!isdigit(str[j]) && str[j] != '-' && str[j] != '.' && str[j] != ' ')) {
+			else if ((isdigit(str[i]) || str[i] == '-' || str[i] == '.') && (!isdigit(str[j]) && str[j] != '-' && str[j] != '.')) {
+				tokens.push_back(str.substr(i, j - i));
+				i = j;
+			}
+			else if ((isdigit(str[i]) || str[i] == '-' || str[i] == '.') && (str[j] == '-')) {
 				tokens.push_back(str.substr(i, j - i));
 				i = j;
 			}
@@ -58,6 +62,10 @@ unsigned StringToTokensWS(vector<string>& tokens, string& str)
 				i = j;
 			}
 			else if (ispunct(str[i]) && str[i] != '-') {
+				if (ispunct(str[i]) && ispunct(str[j]) && j == i+1 && str[j] != '-') {
+					cout << "ERROR" << endl;
+					return 1;
+				}
 				tokens.push_back(str.substr(i, 1));
 				++i;
 			}
