@@ -45,16 +45,16 @@ int main()
 				//Function Call Here
 				break;
 			case 5:
-                    combinatoricsMenu();
+                combinatoricsMenu();
 				break;
 			case 6:
-				vectorMenu(set);
+			//	vectorMenu(set);
 				break;
 			case 7:
 				//Function Call Here
 				break;
 			case 8:
-				optionMenu(set);
+			//	optionMenu(set);
 				break;
 			case 9:
 				break;
@@ -71,4 +71,13 @@ int main()
 
 	}
 
-}
+    // Testing for GMP Library
+    // Test Space Test Space Test Space Test Space Test Space
+    
+    int n = 50;
+    fact(n);
+
+    // Test Space Test Space Test Space Test Space Test Space
+      return 1;
+    }
+

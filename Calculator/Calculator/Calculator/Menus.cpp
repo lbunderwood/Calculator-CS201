@@ -385,9 +385,10 @@ void combinatoricsMenu() {
                         std::cout << "Please enter 2 integers." << std::endl;
                     }
                     
-				// Multiset pramaters 2 ints
+				// Multiset paramaters 2 ints
 				break;
 			case 5:
+                    
 				//stirling number paramaters 2 ints
 				break;
 			case 6:
