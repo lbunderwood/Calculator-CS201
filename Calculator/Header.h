@@ -70,6 +70,9 @@ int multiply(int x, int res[], int res_size);
 //use all of them
 void trigMenu(const Settings& set);
 
+//Contaims menu of polynomial operations
+void polynomialMenu(const Settings& set);
+
 //Menu for vector operations
 void vectorMenu(const Settings& set);
 

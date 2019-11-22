@@ -626,3 +626,135 @@ void vectorMenu(const Settings& set)
 	}
 
 }
+
+
+void polynomialMenu(const Settings& set)
+{
+	int menuchoice = 0;
+	int magnitude = 0;
+	std::vector<double> zeros;
+
+	while (menuchoice != 4)
+	{
+		std::cout << std::endl
+			<< "Please select one of the following options:" << std::endl
+			<< "\t 1. Find the Zeros" << std::endl
+			<< "\t 2. Solution of two Polynomials" << std::endl
+			<< "\t 3. Polynomial Expansion" << std::endl
+			<< "\t 4. Exit" << std::endl;
+
+		//Collects input and handles errors
+		if (getInt(menuchoice))
+		{
+			switch (menuchoice)
+			{
+
+			//Zeros
+			case 1:
+				std::cout << "What is the highest exponent in your polynomial?"
+					<< std::endl;
+				if (getInt(magnitude))
+				{
+					std::vector<double> coefficients(magnitude);
+
+					for (int i = 0; i < magnitude; i++)
+					{
+						std::cout << "What is the coefficient of x ^ "
+							<< std::setprecision(0) << i
+							<< std::setprecision(set.floatnum) << "?";
+						while (!getDouble(coefficients[i]))
+						{
+							std::cout << "Please enter a number.";
+						}
+					}
+
+					while (coefficients[0] == 0)
+					{
+						coefficients.erase(coefficients.begin());
+						magnitude--;
+						if (*zeros.begin() != 0)
+						{
+							zeros.push_back(0);
+						}
+					}
+
+					int positives = 0;
+					for (size_t i = 1; i < magnitude; i++)
+					{
+						if ((coefficients[i] < 0 && coefficients[i - 1] > 0) ||
+							(coefficients[i] > 0 && coefficients[i - 1] < 0))
+						{
+							positives++;
+						}
+					}
+
+					int negatives = 0;
+					std::vector<double> negativesTest = coefficients;
+					for (size_t i = 1; i < magnitude; i += 2)
+					{
+						negativesTest[i] *= -1;
+					}
+
+					for (size_t i = 1; i < magnitude; i++)
+					{
+						if ((coefficients[i] < 0 && coefficients[i - 1] > 0) ||
+							(coefficients[i] > 0 && coefficients[i - 1] < 0))
+						{
+							negatives++;
+						}
+					}
+
+					long double x = 0;
+					long double h = 0.000000001;
+					long double m1 = 0;
+					long double m2 = 0;
+					long double fXplusH = 0;
+					long double fofX = 0;
+					long double fXminusH = 0;
+
+					for (size_t i = 0; i < magnitude; i++)
+					{
+						fofX += coefficients[i] * pow(x, i);
+						fXplusH += coefficients[i] * pow(x + h, i);
+						fXminusH += coefficients[i] * pow(x - h, i);
+					}
+
+					m1 = ((fXplusH - fofX) / h);
+					m2 = ((fofX - fXminusH) / h);
+					std::cout << "f(x) = " << fofX << std::endl << "f(x + h) = " << fXplusH
+						<< std::endl << "f(x-h) = " << fXplusH << std::endl << "f'(x)1 = " << m1 << std::endl << "f'(x)2 = " << m2
+						<< std::endl << "AVE m = " << (m1 + m2) / 2.0;
+				}
+				else
+				{
+					std::cout << "Please enter an integer\n";
+				}
+				break;
+
+				//
+			case 2:
+				
+				break;
+
+				//Expansion
+			case 3:
+				
+				break;
+
+			//Exit
+			case 4:
+				break;
+
+			default:
+				std::cout << "Please enter one of the numbers listed."
+					<< std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "Please enter an integer." << std::endl;
+			continue;
+		}
+	}
+
+}

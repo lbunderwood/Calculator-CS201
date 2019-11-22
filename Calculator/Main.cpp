@@ -39,7 +39,7 @@ int main()
 				trigMenu(set);
 				break;
 			case 3:
-				//Function Call Here
+				polynomialMenu(set);
 				break;
 			case 4:
 				//Function Call Here
