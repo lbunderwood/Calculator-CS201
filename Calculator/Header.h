@@ -16,6 +16,20 @@
 #include<cmath>
 #include<iomanip>
 
+
+// Testing for GMP Library
+// Test Space Test Space Test Space Test Space Test Space
+#include "gmp.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+void fact(int n);
+// Test Space Test Space Test Space Test Space Test Space
+
+
+
+
+
 //Stores various settings to be easily passed into functions
 struct Settings {
 	//true = radians, false = degrees

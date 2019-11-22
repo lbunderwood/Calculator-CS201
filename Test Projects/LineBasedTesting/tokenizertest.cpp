@@ -27,6 +27,9 @@ int main()
 	// Reads lines until it reads end input
 	while (true) {
 		ReadLine(str);
+		if (str.empty()) {
+			continue;
+		}
 		StringToTokensWS(tokens, str);
 		/*
 		if (tokens[tokens.size() - 2] == "end" ||
