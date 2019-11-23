@@ -54,7 +54,7 @@ int main()
 				//Function Call Here
 				break;
 			case 8:
-			//	optionMenu(set);
+				optionMenu(set);
 				break;
 			case 9:
 				break;

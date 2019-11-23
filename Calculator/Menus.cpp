@@ -569,7 +569,7 @@ void vectorMenu(const Settings& set)
 				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0] * vecVec[0][1];
 
 				double dotAns = 0;
-				for (size_t i = 0; i < vecPlaces; i++)
+				for (int i = 0; i < vecPlaces; i++)
 				{
 					dotAns += vecVec[2][i] * crossAns[i];
 				}
@@ -655,13 +655,13 @@ void polynomialMenu(const Settings& set)
 					<< std::endl;
 				if (getInt(magnitude))
 				{
-					std::vector<double> coefficients(magnitude);
+					std::vector<double> coefficients(magnitude + 1);
 
-					for (int i = 0; i < magnitude; i++)
+					for (int i = 0; i <= magnitude; i++)
 					{
 						std::cout << "What is the coefficient of x ^ "
 							<< std::setprecision(0) << i
-							<< std::setprecision(set.floatnum) << "?";
+							<< std::setprecision(set.floatnum) << "?\n";
 						while (!getDouble(coefficients[i]))
 						{
 							std::cout << "Please enter a number.";
@@ -679,7 +679,7 @@ void polynomialMenu(const Settings& set)
 					}
 
 					int positives = 0;
-					for (size_t i = 1; i < magnitude; i++)
+					for (int i = 1; i < magnitude; i++)
 					{
 						if ((coefficients[i] < 0 && coefficients[i - 1] > 0) ||
 							(coefficients[i] > 0 && coefficients[i - 1] < 0))
@@ -690,12 +690,13 @@ void polynomialMenu(const Settings& set)
 
 					int negatives = 0;
 					std::vector<double> negativesTest = coefficients;
-					for (size_t i = 1; i < magnitude; i += 2)
+
+					for (int i = 1; i < magnitude; i += 2)
 					{
 						negativesTest[i] *= -1;
 					}
 
-					for (size_t i = 1; i < magnitude; i++)
+					for (int i = 1; i < magnitude; i++)
 					{
 						if ((coefficients[i] < 0 && coefficients[i - 1] > 0) ||
 							(coefficients[i] > 0 && coefficients[i - 1] < 0))
@@ -704,31 +705,80 @@ void polynomialMenu(const Settings& set)
 						}
 					}
 
-					long double x = 0;
-					long double h = 0.000000001;
-					long double m1 = 0;
-					long double m2 = 0;
-					long double fXplusH = 0;
-					long double fofX = 0;
-					long double fXminusH = 0;
+					mpf_set_default_prec(2048);
 
-					for (size_t i = 0; i < magnitude; i++)
+					mpf_t x;
+					mpf_t h;
+					mpf_t m1;
+					mpf_t m2;
+					mpf_t fofX;
+					mpf_t fXplusH;
+					mpf_t fXminusH;
+					mpf_t coefficient;
+					mpf_inits(x, h, m1, m2, fofX, fXplusH, fXminusH, coefficient, NULL);
+					mpf_set_d(h, 0.00000000000000000000000000001);
+					mpf_set_d(fofX, 1);
+
+
+					while (mpf_get_d(fofX) > mpf_get_d(h) || mpf_get_d(fofX) < -1 * mpf_get_d(h))
 					{
-						fofX += coefficients[i] * pow(x, i);
-						fXplusH += coefficients[i] * pow(x + h, i);
-						fXminusH += coefficients[i] * pow(x - h, i);
+						mpf_set_d(fofX, 0);
+						mpf_set_d(fXplusH, 0);
+						mpf_set_d(fXminusH, 0);
+
+						for (int i = 0; i <= magnitude; i++)
+						{
+							mpf_set_d(coefficient, coefficients[i]);
+							mpf_t term;
+							mpf_init2(term, 2048);
+							mpf_pow_ui(term, x, i);
+							std::cout << "\nx ^ i = " << mpf_get_d(term);
+							mpf_mul(term, term, coefficient);
+							std::cout << "\nfull term = " << mpf_get_d(term);
+							mpf_add(fofX, fofX, term);
+							std::cout << "\nf(x) = " << mpf_get_d(fofX);
+
+							mpf_add(term, x, h);
+							mpf_pow_ui(term, term, i);
+							mpf_mul(term, term, coefficient);
+							mpf_add(fXplusH, fXplusH, term);
+							
+							mpf_sub(term, x, h);
+							mpf_pow_ui(term, term, i);
+							mpf_mul(term, term, coefficient);
+							mpf_add(fXminusH, fXminusH, term);
+						}
+
+						mpf_sub(m1, fXplusH, fofX);
+						mpf_div(m1, m1, h);
+						mpf_sub(m2, fofX, fXminusH);
+						mpf_div(m2, m2, h);
+
+						mpf_add(m1, m1, m2);
+						mpf_div_ui(m1, m1, 2);
+
+
+						if (mpf_get_d(m1) == 0)
+						{
+							mpf_add_ui(x, x, 1);
+						}
+						else
+						{
+							mpf_div(fofX, fofX, m1);
+							mpf_sub(x, x, fofX);
+						}
+
+						std::cout << "\nf'(x) = " << mpf_get_d(m1) << "\nNew x = " << mpf_get_d(x) << std::endl;
 					}
 
-					m1 = ((fXplusH - fofX) / h);
-					m2 = ((fofX - fXminusH) / h);
-					std::cout << "f(x) = " << fofX << std::endl << "f(x + h) = " << fXplusH
-						<< std::endl << "f(x-h) = " << fXplusH << std::endl << "f'(x)1 = " << m1 << std::endl << "f'(x)2 = " << m2
-						<< std::endl << "AVE m = " << (m1 + m2) / 2.0;
 				}
 				else
 				{
 					std::cout << "Please enter an integer\n";
 				}
+
+
+
 				break;
 
 				//
