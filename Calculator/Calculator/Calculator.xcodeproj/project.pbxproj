@@ -38,8 +38,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		704B3AB62389F6460051D047 /* GMPHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMPHeader.h; sourceTree = "<group>"; };
 		704B3AB7238A08A70051D047 /* Menus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Menus.cpp; path = ../../Menus.cpp; sourceTree = "<group>"; };
+		704B3AB9238A1ADC0051D047 /* GMPHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GMPHeader.h; path = ../../GMPHeader.h; sourceTree = "<group>"; };
 		70709EF42385EED100A2E565 /* libgmp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmp.10.dylib; path = ../../../../../../../usr/local/Cellar/gmp/6.1.2_2/lib/libgmp.10.dylib; sourceTree = "<group>"; };
 		7071C0DF2366C1BC00CA218E /* Calculator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Calculator; sourceTree = BUILT_PRODUCTS_DIR; };
 		7071C0E92366C1E300CA218E /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../../Header.h; sourceTree = "<group>"; };
@@ -87,11 +87,11 @@
 		7071C0E12366C1BC00CA218E /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				704B3AB9238A1ADC0051D047 /* GMPHeader.h */,
 				704B3AB7238A08A70051D047 /* Menus.cpp */,
 				7071C0EB2366C1E300CA218E /* Functions.cpp */,
 				7071C0E92366C1E300CA218E /* Header.h */,
 				7071C0EA2366C1E300CA218E /* Main.cpp */,
-				704B3AB62389F6460051D047 /* GMPHeader.h */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
