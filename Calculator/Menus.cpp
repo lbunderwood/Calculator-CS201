@@ -1062,13 +1062,19 @@ void polynomialMenu(const Settings& set)
 
 //(TEMP) Andrew's tokenizer stuff
 
-void lineBasedMenu()
+void lineBasedMenu(const Settings& set)
 {
 	std::cout << std::endl << "Enter a line to calculate it, or type \"quit\" to go back\n\n";
 	std::cout << "Current features:\n";
 	std::cout << "(+), (-), (/), (*)\n";
 	std::cout << "sin(), cos(), tan(), arcsin(), arccos(), arctan()\n";
-	std::cout << "^, ln(), sqrt()" << std::endl;
+	std::cout << "^, ln(), sqrt()\n\n";
+	if (set.radians) {
+		std::cout << "Calculator is currently set to RADIANS" << std::endl;
+	}
+	else {
+		std::cout << "Calculator is currently set to DEGREES" << std::endl;
+	}
 	std::string str;
 	std::vector<std::string> tokens;
 	while (true) {
@@ -1083,7 +1089,7 @@ void lineBasedMenu()
 			break;
 		}
 		makeTokens(tokens, str);
-		evaluateTokens(tokens);
+		evaluateTokens(tokens, set);
 		tokens.clear();
 	}
 }
@@ -1168,7 +1174,7 @@ void makeTokens(std::vector<std::string>& tokens, std::string& str)
 	}
 }
 
-void evaluateTokens(std::vector<std::string>& tokens) {
+void evaluateTokens(std::vector<std::string>& tokens, const Settings& set) {
 	size_t num = 0;
 	std::vector<int> leftParen;
 	for (size_t i = 0; i < tokens.size(); ++i) {
@@ -1182,7 +1188,7 @@ void evaluateTokens(std::vector<std::string>& tokens) {
 					continue;
 				}
 				if (tokens[j] == ")") {
-					long double result = evalInside(i, j, tokens);
+					long double result = evalInside(i, j, tokens, set);
 					if (result == LDBL_MAX) {
 						std::cout << std::endl << "ERROR" << std::endl;
 						return;
@@ -1201,7 +1207,7 @@ void evaluateTokens(std::vector<std::string>& tokens) {
 			}
 		}
 	}
-	long double r = evalInside(0, tokens.size(), tokens);
+	long double r = evalInside(0, tokens.size(), tokens, set);
 	if (r == LDBL_MAX) {
 		std::cout << std::endl << "ERROR" << std::endl;
 		return;
@@ -1209,7 +1215,7 @@ void evaluateTokens(std::vector<std::string>& tokens) {
 	std::cout << std::endl << std::setw(15) << r << std::endl;
 }
 
-long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens) {
+long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens, const Settings& set) {
 	std::vector<std::string> op;
 	std::vector<long double> numbers;
 	for (size_t i = left; i < right; ++i) {
@@ -1218,6 +1224,14 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 		if (is >> num) {
 			op.push_back("null");
 			numbers.push_back(num);
+		}
+		else if (tokens[i] == "pi") {
+			op.push_back("null");
+			numbers.push_back(M_PI);
+		}
+		else if (tokens[i] == "e") {
+			op.push_back("null");
+			numbers.push_back(M_E);
 		}
 		else if (tokens[i] != "(" && tokens[i] != ")") {
 			op.push_back(tokens[i]);
@@ -1243,7 +1257,13 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 			if (numbers[i + 1] == LDBL_MAX) {
 				return LDBL_MAX;
 			}
-			long double result = sin(numbers[i + 1]);
+			long double result;
+			if (set.radians) {
+				result = sin(numbers[i + 1]);
+			}
+			else {
+				result = sin(numbers[i + 1] * M_PI / 180);
+			}
 			numbers.insert(numbers.begin() + i, result);
 			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
@@ -1258,7 +1278,13 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 			if (numbers[i + 1] == LDBL_MAX) {
 				return LDBL_MAX;
 			}
-			long double result = cos(numbers[i + 1]);
+			long double result;
+			if (set.radians) {
+				result = cos(numbers[i + 1]);
+			}
+			else {
+				result = cos(numbers[i + 1] * M_PI / 180);
+			}
 			numbers.insert(numbers.begin() + i, result);
 			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
@@ -1273,7 +1299,13 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 			if (numbers[i + 1] == LDBL_MAX) {
 				return LDBL_MAX;
 			}
-			long double result = tan(numbers[i + 1]);
+			long double result;
+			if (set.radians) {
+				result = tan(numbers[i + 1]);
+			}
+			else {
+				result = tan(numbers[i + 1] * M_PI / 180);
+			}
 			numbers.insert(numbers.begin() + i, result);
 			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
@@ -1288,7 +1320,13 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 			if (numbers[i + 1] == LDBL_MAX) {
 				return LDBL_MAX;
 			}
-			long double result = asin(numbers[i + 1]);
+			long double result;
+			if (set.radians) {
+				result = asin(numbers[i + 1]);
+			}
+			else {
+				result = asin(numbers[i + 1]) * 180 / M_PI;
+			}
 			numbers.insert(numbers.begin() + i, result);
 			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
@@ -1303,7 +1341,13 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 			if (numbers[i + 1] == LDBL_MAX) {
 				return LDBL_MAX;
 			}
-			long double result = acos(numbers[i + 1]);
+			long double result;
+			if (set.radians) {
+				result = acos(numbers[i + 1]);
+			}
+			else {
+				result = acos(numbers[i + 1]) * 180 / M_PI;
+			}
 			numbers.insert(numbers.begin() + i, result);
 			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
@@ -1318,7 +1362,13 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 			if (numbers[i + 1] == LDBL_MAX) {
 				return LDBL_MAX;
 			}
-			long double result = atan(numbers[i + 1]);
+			long double result;
+			if (set.radians) {
+				result = atan(numbers[i + 1]);
+			}
+			else {
+				result = atan(numbers[i + 1]) * 180 / M_PI;
+			}
 			numbers.insert(numbers.begin() + i, result);
 			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);

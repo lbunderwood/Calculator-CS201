@@ -91,12 +91,12 @@ void optionMenu(Settings& set);
 
 //(TEMP) Andrew's tokenizer stuff
 
-void lineBasedMenu();
+void lineBasedMenu(const Settings& set);
 
 void makeTokens(std::vector<std::string>& tokens, std::string& str);
 
-void evaluateTokens(std::vector<std::string>& tokens);
+void evaluateTokens(std::vector<std::string>& tokens, const Settings& set);
 
-long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens);
+long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens, const Settings& set);
 
 #endif
