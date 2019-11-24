@@ -14,6 +14,7 @@
 #include<vector>
 #include<sstream>
 #include<cmath>
+#include<cctype>
 #include<iomanip>
 #include "GMPHeader.h"
 
@@ -86,5 +87,16 @@ void combinatoricsMenu();
 //Allows the user to change various settings
 //Radians/degrees, scientific/fixed, etc
 void optionMenu(Settings& set);
+
+
+//(TEMP) Andrew's tokenizer stuff
+
+void lineBasedMenu();
+
+void makeTokens(std::vector<std::string>& tokens, std::string& str);
+
+void evaluateTokens(std::vector<std::string>& tokens);
+
+long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens);
 
 #endif
