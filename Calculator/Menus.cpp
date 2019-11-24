@@ -680,10 +680,11 @@ void polynomialMenu(const Settings& set)
 							<< std::setprecision(set.floatnum) << "?\n";
 						while (!getDouble(coefficients[i]))
 						{
-							std::cout << "Please enter a number.";
+							std::cout << "Please enter a number.\n";
 						}
 					}
-
+					std::cout << "Calculating. This can take a long time "
+						<< "depending on your function." << std::endl;
 					while (coefficients[0] == 0)
 					{
 						coefficients.erase(coefficients.begin());
@@ -750,7 +751,6 @@ void polynomialMenu(const Settings& set)
 							|| mpf_get_d(fofX) < -1 * mpf_get_d(h))
 							&& iIn < 100)
 						{
-							std::cout << mpf_get_d(x) << std::endl;
 							mpf_set_d(fofX, 0);
 							mpf_set_d(fXplusH, 0);
 							mpf_set_d(fXminusH, 0);
@@ -860,11 +860,8 @@ void polynomialMenu(const Settings& set)
 				{
 					std::cout << "Please enter an integer\n";
 				}
-
 				zeros.clear();
-
 				break;
-
 				//
 			case 2:
 				
