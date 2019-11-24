@@ -12,6 +12,7 @@
 #include <cctype>
 #include "tokenizer.h"
 #include <cmath>
+#include <cfloat>
 
 using std::cin;
 using std::cout;
@@ -227,6 +228,10 @@ void EvaluateTokens(vector<string>& tokens) {
 				}
 				if (tokens[j] == ")") {
 					long double result = EvalInside(i, j, tokens);
+					if (result == LDBL_MAX) {
+						cout << "ERROR" << endl;
+						return;
+					}
 					tokens.erase(tokens.begin() + i, tokens.begin() + j + 1);
 					tokens.insert(tokens.begin() + i, std::to_string(result));
 					if (num > 0) {
@@ -246,8 +251,11 @@ void EvaluateTokens(vector<string>& tokens) {
 		}
 	}
 	long double r = EvalInside(0, tokens.size(), tokens);
+	if (r == LDBL_MAX) {
+		cout << "ERROR" << endl;
+		return;
+	}
 	cout << r << endl;
-	tokens.clear();
 }
 
 long double EvalInside(const size_t& left, const size_t& right, vector<string>& tokens) {
@@ -262,7 +270,18 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 		}
 		else if (tokens[i] != "(" && tokens[i] != ")") {
 			op.push_back(tokens[i]);
-			numbers.push_back(0);
+			numbers.push_back(LDBL_MAX);
+		}
+	}
+	if (numbers.size() == 1) {
+		return numbers[0];
+	}
+	if (left + 1 == right) {
+		return LDBL_MAX;
+	}
+	for (size_t i = 0; i < numbers.size() - 1; ++i) {
+		if (numbers[i] != LDBL_MAX && numbers[i + 1] != LDBL_MAX) {
+			return LDBL_MAX;
 		}
 	}
 
@@ -278,9 +297,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "sin") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = sin(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 			
 			cout << endl;
@@ -298,9 +323,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "cos") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = cos(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 
 			cout << endl;
@@ -318,9 +349,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "tan") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = tan(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 
 			cout << endl;
@@ -338,9 +375,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "arcsin") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = asin(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 
 			cout << endl;
@@ -358,9 +401,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "arccos") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = acos(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 
 			cout << endl;
@@ -378,9 +427,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "arctan") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = atan(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 
 			cout << endl;
@@ -398,9 +453,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "ln") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = log(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 
 			cout << endl;
@@ -418,9 +479,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "sqrt") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = sqrt(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
 
 			cout << endl;
@@ -438,14 +505,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "^") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = pow(numbers[i - 1], numbers[i + 1]);
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
 
 			cout << endl;
@@ -463,14 +531,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "*") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] * numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
 
 			cout << endl;
@@ -488,14 +557,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "/") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] / numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
 
 			cout << endl;
@@ -513,14 +583,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "+") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] + numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
 
 			cout << endl;
@@ -538,14 +609,15 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "-") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] - numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
 
 			cout << endl;

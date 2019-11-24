@@ -910,6 +910,8 @@ void lineBasedMenu()
 			break;
 		}
 		makeTokens(tokens, str);
+		evaluateTokens(tokens);
+		tokens.clear();
 	}
 }
 
@@ -991,20 +993,9 @@ void makeTokens(std::vector<std::string>& tokens, std::string& str)
 			token.clear();
 		}
 	}
-	std::cout << "TESTING OUTPUT" << std::endl;
-	for (const auto t : tokens) {
-		std::cout << t << " || ";
-	}
-	std::cout << std::endl;
-	evaluateTokens(tokens);
 }
 
 void evaluateTokens(std::vector<std::string>& tokens) {
-	std::cout << std::endl;
-	for (const auto& s : tokens) {
-		std::cout << s << " ";
-	}
-	std::cout << std::endl;
 	size_t num = 0;
 	std::vector<int> leftParen;
 	for (size_t i = 0; i < tokens.size(); ++i) {
@@ -1019,6 +1010,10 @@ void evaluateTokens(std::vector<std::string>& tokens) {
 				}
 				if (tokens[j] == ")") {
 					long double result = evalInside(i, j, tokens);
+					if (result == LDBL_MAX) {
+						std::cout << std::endl << "ERROR" << std::endl;
+						return;
+					}
 					tokens.erase(tokens.begin() + i, tokens.begin() + j + 1);
 					tokens.insert(tokens.begin() + i, std::to_string(result));
 					if (num > 0) {
@@ -1028,18 +1023,17 @@ void evaluateTokens(std::vector<std::string>& tokens) {
 						leftParen.clear();
 					}
 					i = 0;
-					for (const auto& s : tokens) {
-						std::cout << s << " ";
-					}
-					std::cout << std::endl;
 					break;
 				}
 			}
 		}
 	}
 	long double r = evalInside(0, tokens.size(), tokens);
-	std::cout << r << std::endl;
-	tokens.clear();
+	if (r == LDBL_MAX) {
+		std::cout << std::endl << "ERROR" << std::endl;
+		return;
+	}
+	std::cout << std::endl << r << std::endl;
 }
 
 long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens) {
@@ -1054,302 +1048,212 @@ long double evalInside(const size_t& left, const size_t& right, std::vector<std:
 		}
 		else if (tokens[i] != "(" && tokens[i] != ")") {
 			op.push_back(tokens[i]);
-			numbers.push_back(0);
+			numbers.push_back(LDBL_MAX);
 		}
 	}
-
-	std::cout << std::endl;
-	for (const auto s : op) {
-		std::cout << s << " ";
+	if (numbers.size() == 1) {
+		return numbers[0];
 	}
-	std::cout << std::endl;
-	for (const auto n : numbers) {
-		std::cout << n << " ";
+	if (left + 1 == right) {
+		return LDBL_MAX;
 	}
-	std::cout << std::endl;
-
+	for (size_t i = 0; i < numbers.size() - 1; ++i) {
+		if (numbers[i] != LDBL_MAX && numbers[i + 1] != LDBL_MAX) {
+			return LDBL_MAX;
+		}
+	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "sin") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = sin(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "cos") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = cos(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "tan") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = tan(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "arcsin") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = asin(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "arccos") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = acos(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "arctan") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = atan(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "ln") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = log(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "sqrt") {
+			if (i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = sqrt(numbers[i + 1]);
-			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
+			numbers.erase(numbers.begin() + i + 1, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 1);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "^") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = pow(numbers[i - 1], numbers[i + 1]);
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "*") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] * numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "/") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] / numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "+") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] + numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "-") {
+			if (i == 0 || i == op.size() - 1) {
+				return LDBL_MAX;
+			}
+			if (numbers[i - 1] == LDBL_MAX || numbers[i + 1] == LDBL_MAX) {
+				return LDBL_MAX;
+			}
 			long double result = numbers[i - 1] - numbers[i + 1];
-			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
-			if (numbers.empty()) {
-				numbers.push_back(result);
-			}
-			else {
-				numbers.insert(numbers.begin() + i - 1, result);
-			}
+			numbers.insert(numbers.begin() + i - 1, result);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 3);
 			op.erase(op.begin() + i, op.begin() + i + 2);
-
-			std::cout << std::endl;
-			for (const auto s : op) {
-				std::cout << s << " ";
-			}
-			std::cout << std::endl;
-			for (const auto n : numbers) {
-				std::cout << n << " ";
-			}
-			std::cout << std::endl;
-
 			i = 0;
 		}
 	}
