@@ -580,9 +580,12 @@ void vectorMenu(const Settings& set)
 				std::cout << std::endl;
 
 				std::vector<double> crossAns(vecPlaces, 0);
-				crossAns[0] = vecVec[0][1] * vecVec[1][2] - vecVec[1][1] * vecVec[0][2];
-				crossAns[1] = (vecVec[0][0] * vecVec[1][2] - vecVec[1][0] * vecVec[0][2]) * -1;
-				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0] * vecVec[0][1];
+				crossAns[0] = vecVec[0][1] * vecVec[1][2] - vecVec[1][1] 
+					* vecVec[0][2];
+				crossAns[1] = (vecVec[0][0] * vecVec[1][2] - vecVec[1][0] 
+					* vecVec[0][2]) * -1;
+				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0] 
+					* vecVec[0][1];
 
 				double dotAns = 0;
 				for (int i = 0; i < vecPlaces; i++)
@@ -664,7 +667,7 @@ void polynomialMenu(const Settings& set)
 		{
 			switch (menuchoice)
 			{
-				//Zeros
+			//Zeros
 			case 1:
 			{
 				std::cout << "What is the highest exponent in your polynomial?"
@@ -698,7 +701,7 @@ void polynomialMenu(const Settings& set)
 					int positives = 0;
 					for (int i = 1; i <= magnitude; i++)
 					{
-						if ((coefficients[i] < 0 && coefficients[i - 1] >= 0) ||
+						if ((coefficients[i] < 0 && coefficients[i - 1] >= 0)||
 							(coefficients[i] >= 0 && coefficients[i - 1] < 0))
 						{
 							positives++;
@@ -715,8 +718,9 @@ void polynomialMenu(const Settings& set)
 
 					for (int i = 1; i <= magnitude; i++)
 					{
-						if ((negativesTest[i] < 0 && negativesTest[i - 1] >= 0) ||
-							(negativesTest[i] >= 0 && negativesTest[i - 1] < 0))
+						if ((negativesTest[i] < 0 && negativesTest[i - 1] >= 0)
+							|| (negativesTest[i] >= 0 
+								&& negativesTest[i - 1] < 0))
 						{
 							negatives++;
 						}
@@ -891,9 +895,12 @@ void polynomialMenu(const Settings& set)
 					std::cout << "Please enter a number.\n";
 				}
 
-				std::cout << "These lines intersect at ("
-					<< (line1.second - line2.second) / (line2.first - line1.first)
-					<< " , " << line1.first* (line1.second - line2.second) / (line2.first - line1.first) + line1.second << ")" << std::endl;
+				std::cout << "These lines intersect at (" 
+					<< (line1.second - line2.second) / 
+					(line2.first - line1.first) << " , " 
+					<< line1.first* (line1.second - line2.second) / 
+					(line2.first - line1.first) + line1.second << ")" 
+					<< std::endl;
 
 
 				break;
@@ -958,7 +965,8 @@ void polynomialMenu(const Settings& set)
 						}
 						else
 						{
-							temp.push_back(triangle[i - 1][j - 1] + triangle[i - 1][j]);
+							temp.push_back(triangle[i - 1][j - 1] + 
+								triangle[i - 1][j]);
 						}
 					}
 					triangle.push_back(temp);
@@ -969,7 +977,8 @@ void polynomialMenu(const Settings& set)
 					std::cout << triangle[exp][i] * pow(pairA.first, exp - i)
 						* pow(pairB.first, i);
 
-					if ((pairA.second != NULL && exp != i) || (pairB.second != NULL && i != 0))
+					if ((pairA.second != NULL && exp != i) || 
+						(pairB.second != NULL && i != 0))
 					{
 						std::cout << "(";
 					}
@@ -990,7 +999,8 @@ void polynomialMenu(const Settings& set)
 						std::cout << pairB.second << " ^ " << i;
 					}
 					
-					if ((pairA.second != NULL && exp != i) || (pairB.second != NULL && i != 0))
+					if ((pairA.second != NULL && exp != i) || 
+						(pairB.second != NULL && i != 0))
 					{
 						std::cout << ")";
 					}
