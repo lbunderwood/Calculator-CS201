@@ -11,7 +11,7 @@ int main()
 	int menuchoice = 0;
 	Settings set;
 
-	while (menuchoice != 9)
+	while (menuchoice != 8)
 	{
 
 		//Main Menu that opens into submenus
