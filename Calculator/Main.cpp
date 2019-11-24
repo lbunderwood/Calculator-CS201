@@ -39,7 +39,7 @@ int main()
 				trigMenu(set);
 				break;
 			case 3:
-				//Function Call Here
+				polynomialMenu(set);
 				break;
 			case 4:
 				//Function Call Here
@@ -48,13 +48,13 @@ int main()
                 combinatoricsMenu();
 				break;
 			case 6:
-			//	vectorMenu(set);
+				vectorMenu(set);
 				break;
 			case 7:
 				//Function Call Here
 				break;
 			case 8:
-			//	optionMenu(set);
+				optionMenu(set);
 				break;
 			case 9:
 				break;
@@ -70,14 +70,6 @@ int main()
 		}
 
 	}
-
-    // Testing for GMP Library
-    // Test Space Test Space Test Space Test Space Test Space
-    
-    int n = 50;
-    fact(n);
-
-    // Test Space Test Space Test Space Test Space Test Space
       return 1;
-    }
+}
 

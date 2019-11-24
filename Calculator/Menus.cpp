@@ -271,112 +271,128 @@ void optionMenu(Settings& set)
 
 }
 
-
 void combinatoricsMenu() {
-	int menuchoice = 0;
-	float num1;
-	float num2;
-	int num3;
-	int res[500];
+    int menuchoice = 0;
+    int num3;
+    int num4;
+    
+    // Function for paramaters will probably use getint
 
-	// Function for paramaters will probably use getint
+    while (menuchoice != 10)
+    {
+        std::cout << std::endl
+            << "Please select one of the following options:" << std::endl
+            << "\t 1.  Permuatation" << std::endl
+            << "\t 2.  Combination" << std::endl
+            << "\t 3.  K-list" << std::endl
+            << "\t 4.  Multiset" << std::endl
+            << "\t 5.  Stirling-Number" << std::endl
+            << "\t 6.  Sum Stirling-Number" << std::endl
+            << "\t 7.  Bell Number" << std::endl
+            << "\t 8.  Partitions of an Integer" << std::endl
+            << "\t 9.  Sum Partitions of an Integer" << std::endl
+            << "\t 10. Exit" << std::endl;
 
-	while (menuchoice != 10)
-	{
-		std::cout << std::endl
-			<< "Please select one of the following options:" << std::endl
-			<< "\t 1.  Permuatation" << std::endl
-			<< "\t 2.  Combination" << std::endl
-			<< "\t 3.  K-list" << std::endl
-			<< "\t 4.  Multiset" << std::endl
-			<< "\t 5.  Stirling-Number" << std::endl
-			<< "\t 6.  Sum Stirling-Number" << std::endl
-			<< "\t 7.  Bell Number" << std::endl
-			<< "\t 8.  Partitions of an Integer" << std::endl
-			<< "\t 9.  Sum Partitions of an Integer" << std::endl
-			<< "\t 10. Exit" << std::endl;
+        if (getInt(menuchoice))
+        {
+            switch (menuchoice)
+            {
+            case 1:
+                std::cout << "Please enter an integer." << std::endl;
+                if (getInt(num3)) {
+                    fact(num3);
+                }
+                else
+                {
+                    std::cout << "Please enter an integer." << std::endl;
+                }
 
-		if (getInt(menuchoice))
-		{
-			switch (menuchoice)
-			{
-			case 1:
-				std::cout << "Please enter an integer." << std::endl;
-				if (getInt(num3)) {
+                //permutation paramaters int
+                break;
 
-					// Initialize result
-					res[0] = 1;
-					int res_size = 1;
+            case 2:
+                std::cout << "Please enter 2 integers" << std::endl;
+                    if (getInt(num3) && getInt(num4)){
+                        combination(num3, num4, 1);
+                    }
+                else
+                {
+                    std::cout << "Please enter 2 integers." << std::endl;
+                }
+                break;
 
-					// Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
-					for (int x = 2; x <= num3; x++)
-						res_size = multiply(x, res, res_size);
+            case 3:
+                    
+                    std::cout << "Please enter an 2 integers." << std::endl;
+                    if (getInt(num3)&&getInt(num4)){
+                        klist(num3,num4);
+                    }
+                    else
+                                {
+                                    std::cout << "Please enter an integer." << std::endl;
+                                }
+                    
+                // K list paramaters 2 ints
+                break;
 
-					std::cout << num3 << "! is: ";
-					for (int i = res_size - 1; i >= 0; i--)
-						std::cout << res[i];
-				}
-				else
-				{
-					std::cout << "Please enter an integer." << std::endl;
-				}
-
-				//permutation paramaters int
-				break;
-
-			case 2:
-				std::cout << "Please enter 2 integers" << std::endl;
-				if (getFloat(num1) && getFloat(num2))
-				{
-					float result = num1;
-					for (int i = 2; i <= num2; ++i)
-					{
-						result *= (num1 - i + 1);
-						result /= i;
-					}
-					std::cout << num1 << " choose " << num2 << " is " << result << std::endl;
-				}
-				else
-				{
-					std::cout << "Please enter 2 integers." << std::endl;
-				}
-				break;
-
-			case 3:
-				// K list paramaters 2 ints
-				break;
-
-			case 4:
-				// Multiset pramaters 2 ints
-				break;
-			case 5:
-				//stirling number paramaters 2 ints
-				break;
-			case 6:
-				//sum stirling number paramaters 2 ints
-				break;
-			case 7:
-				// bell number paramater 1 int
-				break;
-			case 8:
-				// partitions of an integer paramaters 2 ints
-				break;
-			case 9:
-				// sum partitions of an integer paramates 2 ints
-				break;
-			case 10:
-				break;
-			default:
-				std::cout << "Please enter one of the options." << std::endl;
-				break;
-			}
-		}
-		else
-		{
-			std::cout << "Please enter an integer." << std::endl;
-		}
-	}
+            case 4:
+                    
+                    std::cout << "Please enter 2 integers" << std::endl;
+                    if (getInt(num3) && getInt(num4))
+                    {
+                             combination(num3+num4-1, num4, 0);
+                    }
+                    else
+                    {
+                        std::cout << "Please enter 2 integers." << std::endl;
+                    }
+                    
+                // Multiset paramaters 2 ints
+                break;
+            case 5:
+                    std::cout << "Please enter 2 integers" << std::endl;
+                    if (getInt(num3) && getInt(num4)){
+                        stirling(num3, num4);
+                    }
+                    else
+                    {
+                    std::cout << "Please enter 2 integers." << std::endl;
+                    }
+                    break;
+                    
+                //stirling number paramaters 2 ints
+                break;
+            case 6:
+                //sum stirling number paramaters 2 ints
+                break;
+            case 7:
+                // bell number paramater 1 int
+                break;
+            case 8:
+                // partitions of an integer paramaters 2 ints
+                break;
+            case 9:
+                // sum partitions of an integer paramates 2 ints
+                break;
+            case 10:
+                break;
+            default:
+                std::cout << "Please enter one of the options." << std::endl;
+                break;
+            }
+        }
+        else
+        {
+            std::cout << "Please enter an integer." << std::endl;
+        }
+    }
 }
+
+
+
+
+
+
 
 
 void vectorMenu(const Settings& set)
@@ -569,7 +585,7 @@ void vectorMenu(const Settings& set)
 				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0] * vecVec[0][1];
 
 				double dotAns = 0;
-				for (size_t i = 0; i < vecPlaces; i++)
+				for (int i = 0; i < vecPlaces; i++)
 				{
 					dotAns += vecVec[2][i] * crossAns[i];
 				}
@@ -613,6 +629,253 @@ void vectorMenu(const Settings& set)
 				break;
 			case 8:
 				break;
+			default:
+				std::cout << "Please enter one of the numbers listed."
+					<< std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "Please enter an integer." << std::endl;
+			continue;
+		}
+	}
+
+}
+
+
+void polynomialMenu(const Settings& set)
+{
+	int menuchoice = 0;
+	int magnitude = 0;
+	std::vector<double> zeros;
+
+	while (menuchoice != 4)
+	{
+		std::cout << std::endl
+			<< "Please select one of the following options:" << std::endl
+			<< "\t 1. Find the Zeros" << std::endl
+			<< "\t 2. Solution of two Polynomials" << std::endl
+			<< "\t 3. Polynomial Expansion" << std::endl
+			<< "\t 4. Exit" << std::endl;
+
+		//Collects input and handles errors
+		if (getInt(menuchoice))
+		{
+			switch (menuchoice)
+			{
+
+			//Zeros
+			case 1:
+				std::cout << "What is the highest exponent in your polynomial?"
+					<< std::endl;
+				if (getInt(magnitude))
+				{
+					std::vector<double> coefficients(magnitude + 1);
+
+					for (int i = 0; i <= magnitude; i++)
+					{
+						std::cout << "What is the coefficient of x ^ "
+							<< std::setprecision(0) << i
+							<< std::setprecision(set.floatnum) << "?\n";
+						while (!getDouble(coefficients[i]))
+						{
+							std::cout << "Please enter a number.\n";
+						}
+					}
+					std::cout << "Calculating. This can take a long time "
+						<< "depending on your function." << std::endl;
+					while (coefficients[0] == 0)
+					{
+						coefficients.erase(coefficients.begin());
+						magnitude--;
+						if (zeros.size() == 0)
+						{
+							zeros.push_back(0);
+						}
+					}
+
+					int positives = 0;
+					for (int i = 1; i <= magnitude; i++)
+					{
+						if ((coefficients[i] < 0 && coefficients[i - 1] >= 0) ||
+							(coefficients[i] >= 0 && coefficients[i - 1] < 0))
+						{
+							positives++;
+						}
+					}
+
+					int negatives = 0;
+					std::vector<double> negativesTest = coefficients;
+
+					for (int i = 1; i <= magnitude; i += 2)
+					{
+						negativesTest[i] *= -1;
+					}
+
+					for (int i = 1; i <= magnitude; i++)
+					{
+						if ((negativesTest[i] < 0 && negativesTest[i - 1] >= 0) ||
+							(negativesTest[i] >= 0 && negativesTest[i - 1] < 0))
+						{
+							negatives++;
+						}
+					}
+
+					mpf_set_default_prec(1024);
+
+					mpf_t x;
+					mpf_t h;
+					mpf_t m1;
+					mpf_t m2;
+					mpf_t fofX;
+					mpf_t fXplusH;
+					mpf_t fXminusH;
+					mpf_t coefficient;
+					mpf_inits(x, h, m1, m2, fofX, 
+						fXplusH, fXminusH, coefficient, NULL);
+					mpf_set_d(h, 0.00000000000000000000000000001);
+					mpf_set_d(fofX, 1);
+
+					int posZerosFound = 0;
+					int negZerosFound = 0;
+					int iOut = 0;
+					int iIn = 0;
+
+					while ((posZerosFound < positives 
+						|| negZerosFound < negatives)
+						&& iOut < magnitude * 2)
+					{
+
+						while ((mpf_get_d(fofX) > mpf_get_d(h) 
+							|| mpf_get_d(fofX) < -1 * mpf_get_d(h))
+							&& iIn < 100)
+						{
+							mpf_set_d(fofX, 0);
+							mpf_set_d(fXplusH, 0);
+							mpf_set_d(fXminusH, 0);
+
+							for (int i = 0; i <= magnitude; i++)
+							{
+								mpf_set_d(coefficient, coefficients[i]);
+								mpf_t term;
+								mpf_init2(term, 2048);
+								mpf_pow_ui(term, x, i);
+								mpf_mul(term, term, coefficient);
+								mpf_add(fofX, fofX, term);
+
+								mpf_add(term, x, h);
+								mpf_pow_ui(term, term, i);
+								mpf_mul(term, term, coefficient);
+								mpf_add(fXplusH, fXplusH, term);
+
+								mpf_sub(term, x, h);
+								mpf_pow_ui(term, term, i);
+								mpf_mul(term, term, coefficient);
+								mpf_add(fXminusH, fXminusH, term);
+							}
+
+							if (mpf_get_d(fofX) < mpf_get_d(h) 
+								&& mpf_get_d(fofX) > -1 * mpf_get_d(h))
+							{
+								bool exist = false;
+								for (auto n : zeros)
+								{
+									if (n == mpf_get_d(x))
+									{
+										exist = true;
+										break;
+									}
+								}
+								if (!exist)
+								{
+									zeros.push_back(mpf_get_d(x));
+									if (mpf_get_d(x) > 0)
+									{
+										posZerosFound++;
+									}
+									else if (mpf_get_d(x) < 0)
+									{
+										negZerosFound++;
+									}
+								}
+								continue;
+							}
+
+							mpf_sub(m1, fXplusH, fofX);
+							mpf_div(m1, m1, h);
+							mpf_sub(m2, fofX, fXminusH);
+							mpf_div(m2, m2, h);
+
+							mpf_add(m1, m1, m2);
+							mpf_div_ui(m1, m1, 2);
+
+							if (mpf_get_d(m1) < mpf_get_d(h) 
+								&& mpf_get_d(m1) > -1 * mpf_get_d(h))
+							{
+								mpf_add_ui(x, x, 1);
+							}
+							else
+							{
+								mpf_div(fofX, fofX, m1);
+								mpf_sub(x, x, fofX);
+							}
+
+							iIn++;
+						}
+
+						switch(iOut % 4)
+						{
+						case 0:
+							mpf_set_d(x, pow((iOut + 1), 0.33));
+							break;
+						case 1:
+							mpf_set_d(x, -pow((iOut + 1), 0.33));
+							break;
+						case 2:
+							mpf_set_d(x, pow(iOut, 2) + 1);
+							break;
+						case 3:
+							mpf_set_d(x, -pow(iOut, 2) + 1);
+							break;
+						}
+						mpf_set_d(fofX, 1);
+						iIn = 0;
+						iOut++;
+
+					}
+
+					std::cout << zeros.size() << " zeros found.\n"
+						<< "They are: ";
+
+					for (auto n : zeros)
+					{
+						std::cout << n << "  ";
+					}
+
+					mpf_clears(x, h, m1, m2, fofX,
+						fXplusH, fXminusH, coefficient, NULL);
+				}
+				else
+				{
+					std::cout << "Please enter an integer\n";
+				}
+				zeros.clear();
+				break;
+				//
+			case 2:
+				
+				break;
+
+				//Expansion
+			case 3:
+				
+				break;
+
+			//Exit
+			case 4:
+				break;
+
 			default:
 				std::cout << "Please enter one of the numbers listed."
 					<< std::endl;

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		70451C7A2367984A00F7B1D0 /* Menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70451C792367984A00F7B1D0 /* Menus.cpp */; };
+		704B3AB8238A08A70051D047 /* Menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 704B3AB7238A08A70051D047 /* Menus.cpp */; };
 		70709EF52385EED100A2E565 /* libgmp.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70709EF42385EED100A2E565 /* libgmp.10.dylib */; };
 		70709EF62385EED100A2E565 /* libgmp.10.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 70709EF42385EED100A2E565 /* libgmp.10.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		7071C0EC2366C1E300CA218E /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7071C0EA2366C1E300CA218E /* Main.cpp */; };
@@ -38,7 +38,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		70451C792367984A00F7B1D0 /* Menus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Menus.cpp; sourceTree = "<group>"; };
+		704B3AB7238A08A70051D047 /* Menus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Menus.cpp; path = ../../Menus.cpp; sourceTree = "<group>"; };
+		704B3AB9238A1ADC0051D047 /* GMPHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GMPHeader.h; path = ../../GMPHeader.h; sourceTree = "<group>"; };
 		70709EF42385EED100A2E565 /* libgmp.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmp.10.dylib; path = ../../../../../../../usr/local/Cellar/gmp/6.1.2_2/lib/libgmp.10.dylib; sourceTree = "<group>"; };
 		7071C0DF2366C1BC00CA218E /* Calculator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Calculator; sourceTree = BUILT_PRODUCTS_DIR; };
 		7071C0E92366C1E300CA218E /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../../Header.h; sourceTree = "<group>"; };
@@ -86,7 +87,8 @@
 		7071C0E12366C1BC00CA218E /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				70451C792367984A00F7B1D0 /* Menus.cpp */,
+				704B3AB9238A1ADC0051D047 /* GMPHeader.h */,
+				704B3AB7238A08A70051D047 /* Menus.cpp */,
 				7071C0EB2366C1E300CA218E /* Functions.cpp */,
 				7071C0E92366C1E300CA218E /* Header.h */,
 				7071C0EA2366C1E300CA218E /* Main.cpp */,
@@ -153,7 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7071C0EC2366C1E300CA218E /* Main.cpp in Sources */,
-				70451C7A2367984A00F7B1D0 /* Menus.cpp in Sources */,
+				704B3AB8238A08A70051D047 /* Menus.cpp in Sources */,
 				7071C0ED2366C1E300CA218E /* Functions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

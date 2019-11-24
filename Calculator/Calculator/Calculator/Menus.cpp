@@ -5,6 +5,7 @@
 //CS201 calculator group project application
 
 #include"Header.h"
+#include "GMPHeader.h"
 
 void trigMenu(const Settings& set)
 {
@@ -274,12 +275,9 @@ void optionMenu(Settings& set)
 
 void combinatoricsMenu() {
 	int menuchoice = 0;
-	float num1;
-	float num2;
 	int num3;
     int num4;
-	int res[500];
-
+    
 	// Function for paramaters will probably use getint
 
 	while (menuchoice != 10)
@@ -304,19 +302,8 @@ void combinatoricsMenu() {
 			case 1:
 				std::cout << "Please enter an integer." << std::endl;
 				if (getInt(num3)) {
-
-					// Initialize result
-					res[0] = 1;
-					int res_size = 1;
-
-					// Factorial formula n! = 1 * 2 * 3 * 4...*n
-					for (int x = 2; x <= num3; x++)
-						res_size = multiply(x, res, res_size);
-
-					std::cout << num3 << "! is: ";
-					for (int i = res_size - 1; i >= 0; i--)
-						std::cout << res[i];
-				}
+                    fact(num3);
+                }
 				else
 				{
 					std::cout << "Please enter an integer." << std::endl;
@@ -327,16 +314,9 @@ void combinatoricsMenu() {
 
 			case 2:
 				std::cout << "Please enter 2 integers" << std::endl;
-				if (getFloat(num1) && getFloat(num2))
-				{
-					float result = num1;
-					for (int i = 2; i <= num2; ++i)
-					{
-						result *= (num1 - i + 1);
-						result /= i;
-					}
-					std::cout << num1 << " choose " << num2 << " is " << result << std::endl;
-				}
+                    if (getInt(num3) && getInt(num4)){
+                        combination(num3, num4, 1);
+                    }
 				else
 				{
 					std::cout << "Please enter 2 integers." << std::endl;
@@ -347,17 +327,7 @@ void combinatoricsMenu() {
                     
                     std::cout << "Please enter an 2 integers." << std::endl;
                     if (getInt(num3)&&getInt(num4)){
-                        // Initialize result
-                        res[0] = 1;
-                        int res_size = 1;
-
-                        // Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
-                        for (int x = num4+1; x <= num3; x++)
-                            res_size = multiply(x, res, res_size);
-
-                        std::cout << num3 << "! /" << num4 <<"! is: ";
-                        for (int i = res_size - 1; i >= 0; i--)
-                            std::cout << res[i];
+                        klist(num3,num4);
                     }
                     else
                                 {
@@ -370,15 +340,26 @@ void combinatoricsMenu() {
 			case 4:
                     
                     std::cout << "Please enter 2 integers" << std::endl;
-                    if (getFloat(num1) && getFloat(num2))
+                    if (getInt(num3) && getInt(num4))
                     {
-                        float result = num1 + num2 - 1;
-                        for (int i = 2; i <= num2; ++i)
-                        {
-                            result *= (num1 - i + 1);
-                            result /= i;
-                        }
-                        std::cout << num1 << " multi-choose " << num2 << " is " << result << std::endl;
+                             combination(num3+num4-1, num4, 0);
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+//                        float result = num1 + num2 - 1;
+//                        for (int i = 2; i <= num2; ++i)
+//                        {
+//                            result *= (num1 - i + 1);
+//                            result /= i;
+//                        }
+//                        std::cout << num1 << " multi-choose " << num2 << " is " << result << std::endl;
                     }
                     else
                     {

@@ -15,17 +15,7 @@
 #include<sstream>
 #include<cmath>
 #include<iomanip>
-
-
-// Testing for GMP Library
-// Test Space Test Space Test Space Test Space Test Space
-#include "gmp.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-void fact(int n);
-// Test Space Test Space Test Space Test Space Test Space
-
+#include "GMPHeader.h"
 
 
 
@@ -83,6 +73,9 @@ int multiply(int x, int res[], int res_size);
 //Contains menu of trig functions and allows the user to
 //use all of them
 void trigMenu(const Settings& set);
+
+//Contaims menu of polynomial operations
+void polynomialMenu(const Settings& set);
 
 //Menu for vector operations
 void vectorMenu(const Settings& set);
