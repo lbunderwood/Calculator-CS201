@@ -5,7 +5,6 @@
 //CS201 calculator group project application
 
 #include"Header.h"
-#include "GMPHeader.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>

@@ -639,8 +639,8 @@ void polynomialMenu(const Settings& set)
 		std::cout << std::endl
 			<< "Please select one of the following options:" << std::endl
 			<< "\t 1. Find the Zeros" << std::endl
-			<< "\t 2. Solution of two Polynomials" << std::endl
-			<< "\t 3. Polynomial Expansion" << std::endl
+			<< "\t 2. Solution of Two Linear Equations" << std::endl
+			<< "\t 3. Binomial Expansion" << std::endl
 			<< "\t 4. Exit" << std::endl;
 
 		//Collects input and handles errors
@@ -648,9 +648,9 @@ void polynomialMenu(const Settings& set)
 		{
 			switch (menuchoice)
 			{
-
-			//Zeros
+				//Zeros
 			case 1:
+			{
 				std::cout << "What is the highest exponent in your polynomial?"
 					<< std::endl;
 				if (getInt(magnitude))
@@ -716,7 +716,7 @@ void polynomialMenu(const Settings& set)
 					mpf_t fXplusH;
 					mpf_t fXminusH;
 					mpf_t coefficient;
-					mpf_inits(x, h, m1, m2, fofX, 
+					mpf_inits(x, h, m1, m2, fofX,
 						fXplusH, fXminusH, coefficient, NULL);
 					mpf_set_d(h, 0.00000000000000000000000000001);
 					mpf_set_d(fofX, 1);
@@ -726,12 +726,12 @@ void polynomialMenu(const Settings& set)
 					int iOut = 0;
 					int iIn = 0;
 
-					while ((posZerosFound < positives 
+					while ((posZerosFound < positives
 						|| negZerosFound < negatives)
 						&& iOut < magnitude * 2)
 					{
 
-						while ((mpf_get_d(fofX) > mpf_get_d(h) 
+						while ((mpf_get_d(fofX) > mpf_get_d(h)
 							|| mpf_get_d(fofX) < -1 * mpf_get_d(h))
 							&& iIn < 100)
 						{
@@ -759,7 +759,7 @@ void polynomialMenu(const Settings& set)
 								mpf_add(fXminusH, fXminusH, term);
 							}
 
-							if (mpf_get_d(fofX) < mpf_get_d(h) 
+							if (mpf_get_d(fofX) < mpf_get_d(h)
 								&& mpf_get_d(fofX) > -1 * mpf_get_d(h))
 							{
 								bool exist = false;
@@ -794,7 +794,7 @@ void polynomialMenu(const Settings& set)
 							mpf_add(m1, m1, m2);
 							mpf_div_ui(m1, m1, 2);
 
-							if (mpf_get_d(m1) < mpf_get_d(h) 
+							if (mpf_get_d(m1) < mpf_get_d(h)
 								&& mpf_get_d(m1) > -1 * mpf_get_d(h))
 							{
 								mpf_add_ui(x, x, 1);
@@ -808,7 +808,7 @@ void polynomialMenu(const Settings& set)
 							iIn++;
 						}
 
-						switch(iOut % 4)
+						switch (iOut % 4)
 						{
 						case 0:
 							mpf_set_d(x, pow((iOut + 1), 0.33));
@@ -846,20 +846,151 @@ void polynomialMenu(const Settings& set)
 				}
 				zeros.clear();
 				break;
-				//
-			case 2:
-				
-				break;
+			}
 
-				//Expansion
-			case 3:
-				
+			//Systems
+			case 2:
+			{
+				std::pair<double, double> line1;
+				std::pair<double, double> line2;
+
+				std::cout << "Enter the slope of the first line\n";
+				while (!getDouble(line1.first))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+				std::cout << "Enter the constant added to the first line\n";
+				while (!getDouble(line1.second))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+				std::cout << "Enter the slope of the second line\n";
+				while (!getDouble(line2.first))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+				std::cout << "Enter the constant added to the second line\n";
+				while (!getDouble(line2.second))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+
+				std::cout << "These lines intersect at ("
+					<< (line1.second - line2.second) / (line2.first - line1.first)
+					<< " , " << line1.first* (line1.second - line2.second) / (line2.first - line1.first) + line1.second << ")" << std::endl;
+
+
 				break;
+			}
+
+			//Expansion
+			case 3:
+			{
+				std::string termA;
+				std::pair<double, char> pairA = { 0, NULL };
+
+				std::cout << "Enter the first term of your binomial: ";
+				std::getline(std::cin, termA);
+				std::istringstream instream(termA);
+				instream >> pairA.first;
+				if (!instream)
+				{
+					std::cout << "Invalid input.\n";
+					break;
+				}
+				if ((termA.back() > 'A' && termA.back() < 'Z')
+					|| (termA.back() > 'a' && termA.back() < 'z'))
+				{
+					pairA.second = termA.back();
+				}
+
+				std::string termB;
+				std::pair<double, char> pairB = { 0, NULL };
+
+				std::cout << "Enter the second term of your binomial: ";
+				std::getline(std::cin, termB);
+				std::istringstream instream2(termB);
+				instream2 >> pairB.first;
+				if (!instream2)
+				{
+					std::cout << "Invalid input.\n";
+					break;
+				}
+				if ((termB.back() > 'A' && termB.back() < 'Z')
+					|| (termB.back() > 'a' && termB.back() < 'z'))
+				{
+					pairB.second = termB.back();
+				}
+
+				int exp;
+				std::cout << "Enter the power is is being raised to: ";
+				while(!getInt(exp))
+				{
+					std::cout << "Invalid input.\n";
+				}
+
+				std::vector<std::vector<int>> triangle;
+				for (int i = 0; i <= exp; i++)
+				{
+					std::vector<int> temp;
+					for (int j = 0; j <= i; j++)
+					{
+						
+						if (j == i || j == 0)
+						{
+							temp.push_back(1);
+						}
+						else
+						{
+							temp.push_back(triangle[i - 1][j - 1] + triangle[i - 1][j]);
+						}
+					}
+					triangle.push_back(temp);
+				}
+
+				for (int i = 0; i <= exp; i++)
+				{
+					std::cout << triangle[exp][i] * pow(pairA.first, exp - i)
+						* pow(pairB.first, i);
+
+					if ((pairA.second != NULL && exp != i) || (pairB.second != NULL && i != 0))
+					{
+						std::cout << "(";
+					}
+
+					if (exp != i && pairA.second != NULL)
+					{
+						std::cout << pairA.second << " ^ " << exp - i;
+					}
+
+					if (exp != i && i != 0 && 
+						pairA.second != NULL && pairB.second != NULL)
+					{
+						std::cout << " * ";
+					}
+
+					if (i != 0 && pairB.second != NULL)
+					{
+						std::cout << pairB.second << " ^ " << i;
+					}
+					
+					if ((pairA.second != NULL && exp != i) || (pairB.second != NULL && i != 0))
+					{
+						std::cout << ")";
+					}
+
+					if (i < exp)
+					{
+						std::cout << " + ";
+					}
+				}
+				std::cout << std::endl;
+				break;
+			}
 
 			//Exit
 			case 4:
 				break;
-
 			default:
 				std::cout << "Please enter one of the numbers listed."
 					<< std::endl;
