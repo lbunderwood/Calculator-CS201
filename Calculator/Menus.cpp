@@ -1064,13 +1064,17 @@ void polynomialMenu(const Settings& set)
 
 void lineBasedMenu()
 {
+	std::cout << std::endl << "Enter a line to calculate it, or type \"quit\" to go back\n\n";
+	std::cout << "Current features:\n";
+	std::cout << "(+), (-), (/), (*)\n";
+	std::cout << "sin(), cos(), tan(), arcsin(), arccos(), arctan()\n";
+	std::cout << "^, ln(), sqrt()" << std::endl;
 	std::string str;
 	std::vector<std::string> tokens;
 	while (true) {
-		std::cout << std::endl << "Enter a line to calculate it, or type \"quit\" to go back" << std::endl;
-		std::cout << "Current features: +, -, /, *" << std::endl;
-		std::cout << "sin(), cos(), tan(), arcsin(), arccos(), arctan()" << std::endl;
-		std::cout << "^, ln(), sqrt()" << std::endl;
+		std::cout << std::endl;
+		std::cout << "---------------------------------------" << std::endl;
+		std::cout << std::endl;
 		std::getline(std::cin, str);
 		if (str.empty()) {
 			continue;
@@ -1202,7 +1206,7 @@ void evaluateTokens(std::vector<std::string>& tokens) {
 		std::cout << std::endl << "ERROR" << std::endl;
 		return;
 	}
-	std::cout << std::endl << r << std::endl;
+	std::cout << std::endl << std::setw(15) << r << std::endl;
 }
 
 long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens) {
