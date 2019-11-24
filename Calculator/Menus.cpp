@@ -36,7 +36,7 @@ void trigMenu(const Settings& set)
 			case 1:
 				if (getDouble(num))
 				{
-					std::cout << "sin(" << num << ") = "
+					std::cout << std::endl << "sin(" << num << ") = "
 						<< sin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -47,7 +47,7 @@ void trigMenu(const Settings& set)
 			case 2:
 				if (getDouble(num))
 				{
-					std::cout << "cos(" << num << ") = "
+					std::cout << std::endl << "cos(" << num << ") = "
 						<< cos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -58,7 +58,7 @@ void trigMenu(const Settings& set)
 			case 3:
 				if (getDouble(num))
 				{
-					std::cout << "tan(" << num << ") = "
+					std::cout << std::endl << "tan(" << num << ") = "
 						<< tan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -69,7 +69,7 @@ void trigMenu(const Settings& set)
 			case 4:
 				if (getDouble(num))
 				{
-					std::cout << "sec(" << num << ") = "
+					std::cout << std::endl << "sec(" << num << ") = "
 						<< 1 / cos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -80,7 +80,7 @@ void trigMenu(const Settings& set)
 			case 5:
 				if (getDouble(num))
 				{
-					std::cout << "csc(" << num << ") = "
+					std::cout << std::endl << "csc(" << num << ") = "
 						<< 1 / sin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -91,7 +91,7 @@ void trigMenu(const Settings& set)
 			case 6:
 				if (getDouble(num))
 				{
-					std::cout << "cot(" << num << ") = "
+					std::cout << std::endl << "cot(" << num << ") = "
 						<< 1 / tan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -102,7 +102,7 @@ void trigMenu(const Settings& set)
 			case 7:
 				if (getDouble(num))
 				{
-					std::cout << "asin(" << num << ") = "
+					std::cout << std::endl << "asin(" << num << ") = "
 						<< asin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -113,7 +113,7 @@ void trigMenu(const Settings& set)
 			case 8:
 				if (getDouble(num))
 				{
-					std::cout << "acos(" << num << ") = "
+					std::cout << std::endl << "acos(" << num << ") = "
 						<< acos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -124,7 +124,7 @@ void trigMenu(const Settings& set)
 			case 9:
 				if (getDouble(num))
 				{
-					std::cout << "atan(" << num << ") = "
+					std::cout << std::endl << "atan(" << num << ") = "
 						<< atan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -135,7 +135,7 @@ void trigMenu(const Settings& set)
 			case 10:
 				if (getDouble(num))
 				{
-					std::cout << "asec(" << num << ") = "
+					std::cout << std::endl << "asec(" << num << ") = "
 						<< 1 / acos(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -146,7 +146,7 @@ void trigMenu(const Settings& set)
 			case 11:
 				if (getDouble(num))
 				{
-					std::cout << "acsc(" << num << ") = "
+					std::cout << std::endl << "acsc(" << num << ") = "
 						<< 1 / asin(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -157,7 +157,7 @@ void trigMenu(const Settings& set)
 			case 12:
 				if (getDouble(num))
 				{
-					std::cout << "acot(" << num << ") = "
+					std::cout << std::endl << "acot(" << num << ") = "
 						<< 1 / atan(degreesToRadians(num, set)) << std::endl;
 				}
 				else
@@ -430,10 +430,10 @@ void vectorMenu(const Settings& set)
 				{
 					vecVec = populateVectors(vecNum, vecPlaces);
 
-					std::cout << "|| ";
+					std::cout << std::endl << "|| ";
 					printVector(vecVec[0]);
 					std::cout << " ||";
-					std::cout << std::endl;
+
 					double magnitude = 0;
 					for (size_t i = 0; i < vecVec[0].size(); i++)
 					{
@@ -459,6 +459,7 @@ void vectorMenu(const Settings& set)
 					{
 						vecVec = populateVectors(vecNum, vecPlaces);
 
+						std::cout << std::endl;
 						for (auto n : vecVec)
 						{
 							printVector(n);
@@ -478,6 +479,7 @@ void vectorMenu(const Settings& set)
 						}
 						std::cout << " = ";
 						printVector(addAns);
+						std::cout << std::endl;
 					}
 					else
 					{
@@ -510,9 +512,8 @@ void vectorMenu(const Settings& set)
 							std::cout << "Bad input. Please enter a number\n";
 						}
 					}
-					std::cout << scalar << " * ";
+					std::cout << std::endl << scalar << " * ";
 					printVector(vecVec[0]);
-					std::cout << std::endl;
 
 					std::vector<double> scaled(vecPlaces, 0);
 					for (int i = 0; i < vecPlaces; i++)
@@ -538,10 +539,11 @@ void vectorMenu(const Settings& set)
 				{
 					vecVec = populateVectors(vecNum, vecPlaces);
 
+					std::cout << std::endl;
 					printVector(vecVec[0]);
 					std::cout << " DOT ";
 					printVector(vecVec[1]);
-					std::cout << std::endl;
+
 					double dotAns = 0;
 					for (size_t i = 0; i < vecVec[0].size(); i++)
 					{
@@ -557,8 +559,32 @@ void vectorMenu(const Settings& set)
 
 			//Cross Product
 			case 5:
-				std::cout << "Work In Progress\n";
+			{
+				vecNum = 2;
+				vecPlaces = 3;
+				std::cout << "Only the crossing of two, three element vectors "
+					<< "is supported." << std::endl;
+
+				vecVec = populateVectors(vecNum, vecPlaces);
+
+				std::vector<double> crossAns(vecPlaces, 0);
+				crossAns[0] = vecVec[0][1] * vecVec[1][2] - vecVec[1][1]
+					* vecVec[0][2];
+				crossAns[1] = (vecVec[0][0] * vecVec[1][2] - vecVec[1][0]
+					* vecVec[0][2]) * -1;
+				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0]
+					* vecVec[0][1];
+
+				std::cout << std::endl;
+				printVector(vecVec[0]);
+				std::cout << " X ";
+				printVector(vecVec[1]);
+				std::cout << " = ";
+				printVector(crossAns);
+				std::cout << std::endl;
+
 				break;
+			}
 
 			//Triple Product
 			case 6:
@@ -571,18 +597,21 @@ void vectorMenu(const Settings& set)
 
 				vecVec = populateVectors(vecNum, vecPlaces);
 
+				std::cout << std::endl;
 				std::cout << "( ";
 				printVector(vecVec[0]);
 				std::cout << " X ";
 				printVector(vecVec[1]);
 				std::cout << " ) DOT ";
 				printVector(vecVec[2]);
-				std::cout << std::endl;
 
 				std::vector<double> crossAns(vecPlaces, 0);
-				crossAns[0] = vecVec[0][1] * vecVec[1][2] - vecVec[1][1] * vecVec[0][2];
-				crossAns[1] = (vecVec[0][0] * vecVec[1][2] - vecVec[1][0] * vecVec[0][2]) * -1;
-				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0] * vecVec[0][1];
+				crossAns[0] = vecVec[0][1] * vecVec[1][2] - vecVec[1][1] 
+					* vecVec[0][2];
+				crossAns[1] = (vecVec[0][0] * vecVec[1][2] - vecVec[1][0] 
+					* vecVec[0][2]) * -1;
+				crossAns[2] = vecVec[0][0] * vecVec[1][1] - vecVec[1][0] 
+					* vecVec[0][1];
 
 				double dotAns = 0;
 				for (int i = 0; i < vecPlaces; i++)
@@ -609,9 +638,9 @@ void vectorMenu(const Settings& set)
 					}
 					scalar = pow(scalar, 0.5);
 
+					std::cout << std::endl;
 					printVector(vecVec[0]);
 					std::cout << " / " << scalar;
-					std::cout << std::endl;
 
 					std::vector<double> scaled(vecPlaces, 0);
 					for (int i = 0; i < vecPlaces; i++)
@@ -655,8 +684,8 @@ void polynomialMenu(const Settings& set)
 		std::cout << std::endl
 			<< "Please select one of the following options:" << std::endl
 			<< "\t 1. Find the Zeros" << std::endl
-			<< "\t 2. Solution of two Polynomials" << std::endl
-			<< "\t 3. Polynomial Expansion" << std::endl
+			<< "\t 2. Solution of Two Linear Equations" << std::endl
+			<< "\t 3. Binomial Expansion" << std::endl
 			<< "\t 4. Exit" << std::endl;
 
 		//Collects input and handles errors
@@ -664,9 +693,9 @@ void polynomialMenu(const Settings& set)
 		{
 			switch (menuchoice)
 			{
-
 			//Zeros
 			case 1:
+			{
 				std::cout << "What is the highest exponent in your polynomial?"
 					<< std::endl;
 				if (getInt(magnitude))
@@ -698,7 +727,7 @@ void polynomialMenu(const Settings& set)
 					int positives = 0;
 					for (int i = 1; i <= magnitude; i++)
 					{
-						if ((coefficients[i] < 0 && coefficients[i - 1] >= 0) ||
+						if ((coefficients[i] < 0 && coefficients[i - 1] >= 0)||
 							(coefficients[i] >= 0 && coefficients[i - 1] < 0))
 						{
 							positives++;
@@ -715,8 +744,9 @@ void polynomialMenu(const Settings& set)
 
 					for (int i = 1; i <= magnitude; i++)
 					{
-						if ((negativesTest[i] < 0 && negativesTest[i - 1] >= 0) ||
-							(negativesTest[i] >= 0 && negativesTest[i - 1] < 0))
+						if ((negativesTest[i] < 0 && negativesTest[i - 1] >= 0)
+							|| (negativesTest[i] >= 0 
+								&& negativesTest[i - 1] < 0))
 						{
 							negatives++;
 						}
@@ -732,7 +762,7 @@ void polynomialMenu(const Settings& set)
 					mpf_t fXplusH;
 					mpf_t fXminusH;
 					mpf_t coefficient;
-					mpf_inits(x, h, m1, m2, fofX, 
+					mpf_inits(x, h, m1, m2, fofX,
 						fXplusH, fXminusH, coefficient, NULL);
 					mpf_set_d(h, 0.00000000000000000000000000001);
 					mpf_set_d(fofX, 1);
@@ -742,12 +772,12 @@ void polynomialMenu(const Settings& set)
 					int iOut = 0;
 					int iIn = 0;
 
-					while ((posZerosFound < positives 
+					while ((posZerosFound < positives
 						|| negZerosFound < negatives)
 						&& iOut < magnitude * 2)
 					{
 
-						while ((mpf_get_d(fofX) > mpf_get_d(h) 
+						while ((mpf_get_d(fofX) > mpf_get_d(h)
 							|| mpf_get_d(fofX) < -1 * mpf_get_d(h))
 							&& iIn < 100)
 						{
@@ -775,7 +805,7 @@ void polynomialMenu(const Settings& set)
 								mpf_add(fXminusH, fXminusH, term);
 							}
 
-							if (mpf_get_d(fofX) < mpf_get_d(h) 
+							if (mpf_get_d(fofX) < mpf_get_d(h)
 								&& mpf_get_d(fofX) > -1 * mpf_get_d(h))
 							{
 								bool exist = false;
@@ -810,7 +840,7 @@ void polynomialMenu(const Settings& set)
 							mpf_add(m1, m1, m2);
 							mpf_div_ui(m1, m1, 2);
 
-							if (mpf_get_d(m1) < mpf_get_d(h) 
+							if (mpf_get_d(m1) < mpf_get_d(h)
 								&& mpf_get_d(m1) > -1 * mpf_get_d(h))
 							{
 								mpf_add_ui(x, x, 1);
@@ -824,7 +854,7 @@ void polynomialMenu(const Settings& set)
 							iIn++;
 						}
 
-						switch(iOut % 4)
+						switch (iOut % 4)
 						{
 						case 0:
 							mpf_set_d(x, pow((iOut + 1), 0.33));
@@ -845,13 +875,14 @@ void polynomialMenu(const Settings& set)
 
 					}
 
-					std::cout << zeros.size() << " zeros found.\n"
+					std::cout << std::endl << zeros.size() << " zeros found. "
 						<< "They are: ";
 
 					for (auto n : zeros)
 					{
 						std::cout << n << "  ";
 					}
+					std::cout << std::endl;
 
 					mpf_clears(x, h, m1, m2, fofX,
 						fXplusH, fXminusH, coefficient, NULL);
@@ -862,20 +893,158 @@ void polynomialMenu(const Settings& set)
 				}
 				zeros.clear();
 				break;
-				//
-			case 2:
-				
-				break;
+			}
 
-				//Expansion
-			case 3:
-				
+			//Systems
+			case 2:
+			{
+				std::pair<double, double> line1;
+				std::pair<double, double> line2;
+
+				std::cout << "Enter the slope of the first line\n";
+				while (!getDouble(line1.first))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+				std::cout << "Enter the constant added to the first line\n";
+				while (!getDouble(line1.second))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+				std::cout << "Enter the slope of the second line\n";
+				while (!getDouble(line2.first))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+				std::cout << "Enter the constant added to the second line\n";
+				while (!getDouble(line2.second))
+				{
+					std::cout << "Please enter a number.\n";
+				}
+
+				std::cout << std::endl << "These lines intersect at (" 
+					<< (line1.second - line2.second) / 
+					(line2.first - line1.first) << " , " 
+					<< line1.first* (line1.second - line2.second) / 
+					(line2.first - line1.first) + line1.second << ")" 
+					<< std::endl;
+
+
 				break;
+			}
+
+			//Expansion
+			case 3:
+			{
+				std::string termA;
+				std::pair<double, char> pairA = { 0, NULL };
+
+				std::cout << "Enter the first term of your binomial: ";
+				std::getline(std::cin, termA);
+				std::istringstream instream(termA);
+				instream >> pairA.first;
+				if (!instream)
+				{
+					std::cout << "Invalid input.\n";
+					break;
+				}
+				if ((termA.back() > 'A' && termA.back() < 'Z')
+					|| (termA.back() > 'a' && termA.back() < 'z'))
+				{
+					pairA.second = termA.back();
+				}
+
+				std::string termB;
+				std::pair<double, char> pairB = { 0, NULL };
+
+				std::cout << "Enter the second term of your binomial: ";
+				std::getline(std::cin, termB);
+				std::istringstream instream2(termB);
+				instream2 >> pairB.first;
+				if (!instream2)
+				{
+					std::cout << "Invalid input.\n";
+					break;
+				}
+				if ((termB.back() > 'A' && termB.back() < 'Z')
+					|| (termB.back() > 'a' && termB.back() < 'z'))
+				{
+					pairB.second = termB.back();
+				}
+
+				int exp;
+				std::cout << "Enter the power is is being raised to: ";
+				while(!getInt(exp))
+				{
+					std::cout << "Invalid input.\n";
+				}
+
+				std::vector<std::vector<int>> triangle;
+				for (int i = 0; i <= exp; i++)
+				{
+					std::vector<int> temp;
+					for (int j = 0; j <= i; j++)
+					{
+						
+						if (j == i || j == 0)
+						{
+							temp.push_back(1);
+						}
+						else
+						{
+							temp.push_back(triangle[i - 1][j - 1] + 
+								triangle[i - 1][j]);
+						}
+					}
+					triangle.push_back(temp);
+				}
+
+				std::cout << std::endl;
+				for (int i = 0; i <= exp; i++)
+				{
+					std::cout << triangle[exp][i] * pow(pairA.first, exp - i)
+						* pow(pairB.first, i);
+
+					if ((pairA.second != NULL && exp != i) || 
+						(pairB.second != NULL && i != 0))
+					{
+						std::cout << "(";
+					}
+
+					if (exp != i && pairA.second != NULL)
+					{
+						std::cout << pairA.second << " ^ " << exp - i;
+					}
+
+					if (exp != i && i != 0 && 
+						pairA.second != NULL && pairB.second != NULL)
+					{
+						std::cout << " * ";
+					}
+
+					if (i != 0 && pairB.second != NULL)
+					{
+						std::cout << pairB.second << " ^ " << i;
+					}
+					
+					if ((pairA.second != NULL && exp != i) || 
+						(pairB.second != NULL && i != 0))
+					{
+						std::cout << ")";
+					}
+
+					if (i < exp)
+					{
+						std::cout << " + ";
+					}
+				}
+				std::cout << std::endl;
+				break;
+			}
 
 			//Exit
 			case 4:
 				break;
-
 			default:
 				std::cout << "Please enter one of the numbers listed."
 					<< std::endl;
