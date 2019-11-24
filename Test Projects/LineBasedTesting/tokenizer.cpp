@@ -35,6 +35,93 @@ bool ReadLine(string& str)
 	}
 }
 
+unsigned StringToTokensWS2(vector<string>& tokens, string& str)
+{
+	string token;
+	bool op = 0;
+	bool num = 0;
+	bool deci = 0;
+	bool alph = 0;
+	for (size_t i = 0; i < str.size(); ++i) {
+		char c = str[i];
+		if (isblank(c)) {
+			if (!token.empty()) {
+				tokens.push_back(token);
+			}
+			token.clear();
+			continue;
+		}
+		if (ispunct(c) && c != '.') {
+			if (i == 0) {
+				op = 1;
+			}
+			if (op && c == '-') {
+				op = 0;
+				num = 1;
+				if (!token.empty()) {
+					tokens.push_back(token);
+				}
+				token.clear();
+				token.push_back(c);
+				continue;
+			}
+			if (!token.empty()) {
+				tokens.push_back(token);
+			}
+			token.clear();
+			token.push_back(c);
+			tokens.push_back(token);
+			token.clear();
+			if (c != '(' && c != ')') {
+				op = 1;
+			}
+			num = 0;
+			alph = 0;
+		}
+		else if (isdigit(c) || c == '.') {
+			op = 0;
+			if (!alph) {
+				num = 1;
+				token.push_back(c);
+			}
+			else {
+				tokens.push_back(token);
+				token.clear();
+				alph = 0;
+				num = 1;
+				token.push_back(c);
+			}
+		}
+		else if (isalpha(c)) {
+			op = 0;
+			if (!num) {
+				alph = 1;
+				token.push_back(c);
+			}
+			else {
+				tokens.push_back(token);
+				token.clear();
+				num = 0;
+				alph = 1;
+				token.push_back(c);
+			}
+		}
+		if (i + 1 == str.size()) {
+			if (!token.empty()) {
+				tokens.push_back(token);
+			}
+			token.clear();
+		}
+	}
+	cout << "TESTING OUTPUT" << endl;
+	for (const auto t : tokens) {
+		cout << t << " || ";
+	}
+	cout << endl;
+	EvaluateTokens(tokens);
+	return 0;
+}
+
 // 15 + (sin(50) * -4) / ln(4^2) - -7.3
 // separates strings by whitespace, pushes strings into a vector
 unsigned StringToTokensWS(vector<string>& tokens, string& str)
@@ -57,7 +144,7 @@ unsigned StringToTokensWS(vector<string>& tokens, string& str)
 					deci = 1;
 				}
 			}
-			if (str[i] == '-' && str[j] == '-') {
+			else if (str[i] == '-' && str[j] == '-') {
 				tokens.push_back(str.substr(i, j - i));
 				i = j;
 				break;
@@ -129,7 +216,6 @@ void EvaluateTokens(vector<string>& tokens) {
 	size_t num = 0;
 	vector<int> leftParen;
 	for (size_t i = 0; i < tokens.size(); ++i) {
-		// cout << i << endl;
 		if (tokens[i] == "(") {
 			leftParen.push_back(i);
 			for (size_t j = i + 1; j < tokens.size(); ++j) {
@@ -142,7 +228,7 @@ void EvaluateTokens(vector<string>& tokens) {
 				if (tokens[j] == ")") {
 					long double result = EvalInside(i, j, tokens);
 					tokens.erase(tokens.begin() + i, tokens.begin() + j + 1);
-					tokens.insert(tokens.begin() + i, std::to_string(result)); //EvalInside(i, j));
+					tokens.insert(tokens.begin() + i, std::to_string(result));
 					if (num > 0) {
 						--num;
 					}
@@ -251,8 +337,88 @@ long double EvalInside(const size_t& left, const size_t& right, vector<string>& 
 		}
 	}
 	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "arcsin") {
+			long double result = asin(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "arccos") {
+			long double result = acos(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "arctan") {
+			long double result = atan(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
 		if (op[i] == "ln") {
 			long double result = log(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			cout << endl;
+			for (const auto s : op) {
+				cout << s << " ";
+			}
+			cout << endl;
+			for (const auto n : numbers) {
+				cout << n << " ";
+			}
+			cout << endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "sqrt") {
+			long double result = sqrt(numbers[i + 1]);
 			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
 			numbers.insert(numbers.begin() + i, result);
 			op.erase(op.begin() + i, op.begin() + i + 1);
