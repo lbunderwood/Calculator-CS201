@@ -289,9 +289,7 @@ void combinatoricsMenu() {
             << "\t 5.  Stirling-Number" << std::endl
             << "\t 6.  Sum Stirling-Number" << std::endl
             << "\t 7.  Bell Number" << std::endl
-            << "\t 8.  Partitions of an Integer" << std::endl
-            << "\t 9.  Sum Partitions of an Integer" << std::endl
-            << "\t 10. Exit" << std::endl;
+            << "\t 8. Exit" << std::endl;
 
         if (getInt(menuchoice))
         {
@@ -363,18 +361,29 @@ void combinatoricsMenu() {
                 //stirling number paramaters 2 ints
                 break;
             case 6:
+                    std::cout << "Please enter 2 integers" << std::endl;
+                             if (getInt(num3) && getInt(num4)){
+                                 stirlingsum(num3, num4,1);
+                             }
+                             else
+                             {
+                             std::cout << "Please enter 2 integers." << std::endl;
+                             }
+                    
                 //sum stirling number paramaters 2 ints
                 break;
             case 7:
+                    std::cout << "Please enter an integer" << std::endl;
+                                 if (getInt(num3)){
+                                     stirlingsum(num3,num3,0);
+                                 }
+                                 else
+                                 {
+                                 std::cout << "Please enter an integer." << std::endl;
+                                 }
                 // bell number paramater 1 int
                 break;
             case 8:
-                // partitions of an integer paramaters 2 ints
-                break;
-            case 9:
-                // sum partitions of an integer paramates 2 ints
-                break;
-            case 10:
                 break;
             default:
                 std::cout << "Please enter one of the options." << std::endl;

@@ -17,5 +17,5 @@ void fact(int n);
 void combination(int n, int j, int e);
 void klist(int n,int k);
 void stirling(int n, int k);
-
+void stirlingsum(int n, int r, int b);
 #endif /* GNUHeader_h */

@@ -23,9 +23,8 @@ int main()
 			<< "\t 4. Calculus" << std::endl
             << "\t 5. Combinatorics" << std::endl
 			<< "\t 6. Vectors" << std::endl
-			<< "\t 7. Matrices" << std::endl
-			<< "\t 8. Settings" << std::endl
-			<< "\t 9. Exit" << std::endl;
+			<< "\t 7. Settings" << std::endl
+			<< "\t 8. Exit" << std::endl;
 
 		//Collects input and handles errors
 		if (getInt(menuchoice))
@@ -51,12 +50,9 @@ int main()
 				vectorMenu(set);
 				break;
 			case 7:
-				//Function Call Here
-				break;
-			case 8:
 				optionMenu(set);
 				break;
-			case 9:
+			case 8:
 				break;
 			default:
 				std::cout << "Please enter one of the numbers listed."
