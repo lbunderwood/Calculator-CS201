@@ -672,17 +672,17 @@ void polynomialMenu(const Settings& set)
 					{
 						coefficients.erase(coefficients.begin());
 						magnitude--;
-						if (*zeros.begin() != 0)
+						if (zeros.size() == 0)
 						{
 							zeros.push_back(0);
 						}
 					}
 
 					int positives = 0;
-					for (int i = 1; i < magnitude; i++)
+					for (int i = 1; i <= magnitude; i++)
 					{
-						if ((coefficients[i] < 0 && coefficients[i - 1] > 0) ||
-							(coefficients[i] > 0 && coefficients[i - 1] < 0))
+						if ((coefficients[i] < 0 && coefficients[i - 1] >= 0) ||
+							(coefficients[i] >= 0 && coefficients[i - 1] < 0))
 						{
 							positives++;
 						}
@@ -691,21 +691,21 @@ void polynomialMenu(const Settings& set)
 					int negatives = 0;
 					std::vector<double> negativesTest = coefficients;
 
-					for (int i = 1; i < magnitude; i += 2)
+					for (int i = 1; i <= magnitude; i += 2)
 					{
 						negativesTest[i] *= -1;
 					}
 
-					for (int i = 1; i < magnitude; i++)
+					for (int i = 1; i <= magnitude; i++)
 					{
-						if ((coefficients[i] < 0 && coefficients[i - 1] > 0) ||
-							(coefficients[i] > 0 && coefficients[i - 1] < 0))
+						if ((negativesTest[i] < 0 && negativesTest[i - 1] >= 0) ||
+							(negativesTest[i] >= 0 && negativesTest[i - 1] < 0))
 						{
 							negatives++;
 						}
 					}
 
-					mpf_set_default_prec(2048);
+					mpf_set_default_prec(1024);
 
 					mpf_t x;
 					mpf_t h;
@@ -715,69 +715,137 @@ void polynomialMenu(const Settings& set)
 					mpf_t fXplusH;
 					mpf_t fXminusH;
 					mpf_t coefficient;
-					mpf_inits(x, h, m1, m2, fofX, fXplusH, fXminusH, coefficient, NULL);
+					mpf_inits(x, h, m1, m2, fofX, 
+						fXplusH, fXminusH, coefficient, NULL);
 					mpf_set_d(h, 0.00000000000000000000000000001);
 					mpf_set_d(fofX, 1);
 
+					int posZerosFound = 0;
+					int negZerosFound = 0;
+					int iOut = 0;
+					int iIn = 0;
 
-					while (mpf_get_d(fofX) > mpf_get_d(h) || mpf_get_d(fofX) < -1 * mpf_get_d(h))
+					while ((posZerosFound < positives 
+						|| negZerosFound < negatives)
+						&& iOut < magnitude * 2)
 					{
-						mpf_set_d(fofX, 0);
-						mpf_set_d(fXplusH, 0);
-						mpf_set_d(fXminusH, 0);
 
-						for (int i = 0; i <= magnitude; i++)
+						while ((mpf_get_d(fofX) > mpf_get_d(h) 
+							|| mpf_get_d(fofX) < -1 * mpf_get_d(h))
+							&& iIn < 100)
 						{
-							mpf_set_d(coefficient, coefficients[i]);
-							mpf_t term;
-							mpf_init2(term, 2048);
-							mpf_pow_ui(term, x, i);
-							std::cout << "\nx ^ i = " << mpf_get_d(term);
-							mpf_mul(term, term, coefficient);
-							std::cout << "\nfull term = " << mpf_get_d(term);
-							mpf_add(fofX, fofX, term);
-							std::cout << "\nf(x) = " << mpf_get_d(fofX);
+							std::cout << mpf_get_d(x) << std::endl;
+							mpf_set_d(fofX, 0);
+							mpf_set_d(fXplusH, 0);
+							mpf_set_d(fXminusH, 0);
 
-							mpf_add(term, x, h);
-							mpf_pow_ui(term, term, i);
-							mpf_mul(term, term, coefficient);
-							mpf_add(fXplusH, fXplusH, term);
-							
-							mpf_sub(term, x, h);
-							mpf_pow_ui(term, term, i);
-							mpf_mul(term, term, coefficient);
-							mpf_add(fXminusH, fXminusH, term);
+							for (int i = 0; i <= magnitude; i++)
+							{
+								mpf_set_d(coefficient, coefficients[i]);
+								mpf_t term;
+								mpf_init2(term, 2048);
+								mpf_pow_ui(term, x, i);
+								mpf_mul(term, term, coefficient);
+								mpf_add(fofX, fofX, term);
+
+								mpf_add(term, x, h);
+								mpf_pow_ui(term, term, i);
+								mpf_mul(term, term, coefficient);
+								mpf_add(fXplusH, fXplusH, term);
+
+								mpf_sub(term, x, h);
+								mpf_pow_ui(term, term, i);
+								mpf_mul(term, term, coefficient);
+								mpf_add(fXminusH, fXminusH, term);
+							}
+
+							if (mpf_get_d(fofX) < mpf_get_d(h) 
+								&& mpf_get_d(fofX) > -1 * mpf_get_d(h))
+							{
+								bool exist = false;
+								for (auto n : zeros)
+								{
+									if (n == mpf_get_d(x))
+									{
+										exist = true;
+										break;
+									}
+								}
+								if (!exist)
+								{
+									zeros.push_back(mpf_get_d(x));
+									if (mpf_get_d(x) > 0)
+									{
+										posZerosFound++;
+									}
+									else if (mpf_get_d(x) < 0)
+									{
+										negZerosFound++;
+									}
+								}
+								continue;
+							}
+
+							mpf_sub(m1, fXplusH, fofX);
+							mpf_div(m1, m1, h);
+							mpf_sub(m2, fofX, fXminusH);
+							mpf_div(m2, m2, h);
+
+							mpf_add(m1, m1, m2);
+							mpf_div_ui(m1, m1, 2);
+
+							if (mpf_get_d(m1) < mpf_get_d(h) 
+								&& mpf_get_d(m1) > -1 * mpf_get_d(h))
+							{
+								mpf_add_ui(x, x, 1);
+							}
+							else
+							{
+								mpf_div(fofX, fofX, m1);
+								mpf_sub(x, x, fofX);
+							}
+
+							iIn++;
 						}
 
-						mpf_sub(m1, fXplusH, fofX);
-						mpf_div(m1, m1, h);
-						mpf_sub(m2, fofX, fXminusH);
-						mpf_div(m2, m2, h);
-
-						mpf_add(m1, m1, m2);
-						mpf_div_ui(m1, m1, 2);
-
-
-						if (mpf_get_d(m1) == 0)
+						switch(iOut % 4)
 						{
-							mpf_add_ui(x, x, 1);
+						case 0:
+							mpf_set_d(x, pow((iOut + 1), 0.33));
+							break;
+						case 1:
+							mpf_set_d(x, -pow((iOut + 1), 0.33));
+							break;
+						case 2:
+							mpf_set_d(x, pow(iOut, 2) + 1);
+							break;
+						case 3:
+							mpf_set_d(x, -pow(iOut, 2) + 1);
+							break;
 						}
-						else
-						{
-							mpf_div(fofX, fofX, m1);
-							mpf_sub(x, x, fofX);
-						}
+						mpf_set_d(fofX, 1);
+						iIn = 0;
+						iOut++;
 
-						std::cout << "\nf'(x) = " << mpf_get_d(m1) << "\nNew x = " << mpf_get_d(x) << std::endl;
 					}
 
+					std::cout << zeros.size() << " zeros found.\n"
+						<< "They are: ";
+
+					for (auto n : zeros)
+					{
+						std::cout << n << "  ";
+					}
+
+					mpf_clears(x, h, m1, m2, fofX,
+						fXplusH, fXminusH, coefficient, NULL);
 				}
 				else
 				{
 					std::cout << "Please enter an integer\n";
 				}
 
-
+				zeros.clear();
 
 				break;
 
