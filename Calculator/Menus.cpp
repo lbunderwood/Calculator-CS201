@@ -899,6 +899,9 @@ void lineBasedMenu()
 	std::vector<std::string> tokens;
 	while (true) {
 		std::cout << std::endl << "Enter a line to calculate it, or type \"quit\" to go back" << std::endl;
+		std::cout << "Current features: +, -, /, *" << std::endl;
+		std::cout << "sin(), cos(), tan(), arcsin(), arccos(), arctan()" << std::endl;
+		std::cout << "^, ln(), sqrt()" << std::endl;
 		std::getline(std::cin, str);
 		if (str.empty()) {
 			continue;
