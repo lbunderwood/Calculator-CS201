@@ -5,12 +5,14 @@
 //CS201 calculator group project application
 
 #include"Header.h"
+#include "GMPHeader.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
 // Testing for GMP Library
 // Test Space Test Space Test Space Test Space Test Space
+
 void fact(int n){
   int i;
   mpz_t p;
@@ -24,6 +26,81 @@ void fact(int n){
   mpz_clear(p);
 
 }
+
+
+
+
+
+
+
+void combination(int n, int j, int e){
+    int c = n - j;
+    
+    mpz_t top_n;
+
+    mpz_init_set_ui(top_n,1); /* p = 1 */
+    for (int i=1; i <= n ; ++i){
+      mpz_mul_ui(top_n,top_n,i); /* p = p * i */
+    }
+    
+    mpz_t bottom_k ;
+
+      mpz_init_set_ui(bottom_k,1); /* p = 1 */
+      for (int i=1; i <= j ; ++i){
+        mpz_mul_ui(bottom_k,bottom_k,i); /* p = p * i */
+      }
+    
+    mpz_t bottom_n_k ;
+
+       mpz_init_set_ui(bottom_n_k,1); /* p = 1 */
+       for (int i=1; i <= c ; ++i){
+         mpz_mul_ui(bottom_n_k,bottom_n_k,i); /* p = p * i */
+       }
+    
+    mpz_t bottom;
+    mpz_mul (bottom,bottom_k,bottom_n_k);
+     
+    mpz_t result;
+    mpz_divexact (result, top_n, bottom);
+    
+    
+    
+    if (e){
+        printf ("%d Choose %d =  ", n , j);
+           mpz_out_str(stdout,10,result);
+           mpz_clear(result);
+    }
+    else{
+ printf ("%d Multiset %d =  ", n-j+1 , j);
+    mpz_out_str(stdout,10,result);
+    mpz_clear(result);
+    }
+}
+
+
+
+
+
+
+void klist(int n,int k){
+    int i;
+    mpz_t p;
+
+    mpz_init_set_ui(p,1); /* p = 1 */
+    for (i=k+1; i <= n ; ++i){
+      mpz_mul_ui(p,p,i); /* p = p * i */
+    }
+    printf ("%d!/%d!  =  ", n, k);
+    mpz_out_str(stdout,10,p);
+    mpz_clear(p);
+    
+}
+
+
+
+
+
+
 // Test Space Test Space Test Space Test Space Test Space
 
 

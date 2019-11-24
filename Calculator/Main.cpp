@@ -70,14 +70,6 @@ int main()
 		}
 
 	}
-
-    // Testing for GMP Library
-    // Test Space Test Space Test Space Test Space Test Space
-    
-    int n = 50;
-    fact(n);
-
-    // Test Space Test Space Test Space Test Space Test Space
       return 1;
     }
 
