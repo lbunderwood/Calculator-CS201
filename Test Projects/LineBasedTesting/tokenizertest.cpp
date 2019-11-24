@@ -31,6 +31,7 @@ int main()
 			continue;
 		}
 		StringToTokensWS2(tokens, str);
+		tokens.clear();
 		/*
 		if (tokens[tokens.size() - 2] == "end" ||
 			tokens[tokens.size() - 2] == "End" || 
