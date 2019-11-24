@@ -17,15 +17,14 @@ int main()
 		//Main Menu that opens into submenus
 		std::cout << std::endl
 			<< "Please select one of the following options:" << std::endl
-			<< "\t 1. Four-Function Calculator" << std::endl
-			<< "\t 2. Trigonometric Functions" << std::endl
+			<< "\t 1. Text Calculator" << std::endl
+			<< "\t 2. Trigonometry" << std::endl
 			<< "\t 3. Polynomials" << std::endl
-			<< "\t 4. Calculus" << std::endl
-            << "\t 5. Combinatorics" << std::endl
-			<< "\t 6. Vectors" << std::endl
-			<< "\t 7. Matrices" << std::endl
-			<< "\t 8. Settings" << std::endl
-			<< "\t 9. Exit" << std::endl;
+            << "\t 4. Combinatorics" << std::endl
+			<< "\t 5. Vectors" << std::endl
+			<< "\t 6. Matrices" << std::endl
+			<< "\t 7. Settings" << std::endl
+			<< "\t 8. Exit" << std::endl;
 
 		//Collects input and handles errors
 		if (getInt(menuchoice))
@@ -42,21 +41,18 @@ int main()
 				polynomialMenu(set);
 				break;
 			case 4:
-				//Function Call Here
-				break;
-			case 5:
                 combinatoricsMenu();
 				break;
-			case 6:
+			case 5:
 				vectorMenu(set);
 				break;
-			case 7:
+			case 6:
 				//Function Call Here
 				break;
-			case 8:
+			case 7:
 				optionMenu(set);
 				break;
-			case 9:
+			case 8:
 				break;
 			default:
 				std::cout << "Please enter one of the numbers listed."
@@ -70,6 +66,5 @@ int main()
 		}
 
 	}
-      return 1;
+    return 1;
 }
-

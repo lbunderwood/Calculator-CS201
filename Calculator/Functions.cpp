@@ -97,7 +97,7 @@ void klist(int n,int k){
 
 void stirling(int n, int k){
     
-       mpz_t sum;
+    mpz_t sum;
     
     mpz_t top_k;
 
@@ -158,6 +158,95 @@ void stirling(int n, int k){
        mpz_clear(result);
 }
 
+
+
+void stirlingsum(int n, int r, int b){
+    
+    mpz_t outersum;
+    
+    for(int i = 1; i<=r; i++){
+      
+        int k = i;
+       
+        mpz_t top_k;
+               mpz_init (top_k);
+
+         mpz_init_set_ui(top_k,1); /* p = 1 */
+         for (int j=1; j <= k ; j++){
+           mpz_mul_ui(top_k,top_k,j); /* p = p * i */
+         }
+        
+        
+           mpz_t sumsum;
+        mpz_init (sumsum);
+        
+    for (int i=0; i <= k ; i++){
+           
+            int c = k-i;
+        
+             mpz_t bottom_i ;
+            mpz_init (bottom_i);
+
+               mpz_init_set_ui(bottom_i,1); /* p = 1 */
+               for (int j=1; j <= i ; j++){
+                 mpz_mul_ui(bottom_i,bottom_i,j); /* p = p * i */
+            }
+             
+             mpz_t bottom_k_i ;
+     mpz_init (bottom_k_i);
+                mpz_init_set_ui(bottom_k_i,1); /* p = 1 */
+                for (int j=1; j <= c ; j++){
+                  mpz_mul_ui(bottom_k_i,bottom_k_i,j); /* p = p * i */
+            }
+             
+            mpz_t bottom;
+            mpz_mul (bottom,bottom_i,bottom_k_i);
+              
+            mpz_t combination;
+            mpz_divexact (combination, top_k, bottom);
+             
+            mpz_t exponent;
+            mpz_ui_pow_ui (exponent,(k-i),n);
+            
+            mpz_t summand;
+            mpz_mul(summand,exponent,combination);
+            
+            
+            if (i%2){
+                mpz_sub (sumsum, sumsum, summand);
+            }
+    
+            else{
+                mpz_add (sumsum, sumsum, summand);
+            }
+        
+    }
+                printf ("Inside Sum =  ");
+            mpz_out_str(stdout,10,sumsum);
+           printf ("   1/%d! = ", k);
+              mpz_out_str(stdout,10,top_k);
+        std::cout << std::endl;
+        
+        mpz_t result;
+        mpz_divexact (result,sumsum,top_k);
+        
+        mpz_add (outersum, outersum, result);
+        
+    }
+    if (b){
+    printf ("S(%d,%d) =  ",n,r);
+       mpz_out_str(stdout,10,outersum);
+       mpz_clear(outersum);
+    }
+    else{
+        printf ("B(%d) =  ",n);
+           mpz_out_str(stdout,10,outersum);
+           mpz_clear(outersum);
+    }
+    
+    
+    
+}
 
 // Test Space Test Space Test Space Test Space Test Space
 
