@@ -15,6 +15,8 @@
 
 bool ReadLine(std::string& str);
 
+unsigned StringToTokensWS2(std::vector<std::string>& tokens, std::string& str);
+
 unsigned StringToTokensWS(std::vector<std::string>& tokens, std::string& str);
 
 void EvaluateTokens(std::vector<std::string>& tokens);

@@ -271,112 +271,128 @@ void optionMenu(Settings& set)
 
 }
 
-
 void combinatoricsMenu() {
-	int menuchoice = 0;
-	float num1;
-	float num2;
-	int num3;
-	int res[500];
+    int menuchoice = 0;
+    int num3;
+    int num4;
+    
+    // Function for paramaters will probably use getint
 
-	// Function for paramaters will probably use getint
+    while (menuchoice != 10)
+    {
+        std::cout << std::endl
+            << "Please select one of the following options:" << std::endl
+            << "\t 1.  Permuatation" << std::endl
+            << "\t 2.  Combination" << std::endl
+            << "\t 3.  K-list" << std::endl
+            << "\t 4.  Multiset" << std::endl
+            << "\t 5.  Stirling-Number" << std::endl
+            << "\t 6.  Sum Stirling-Number" << std::endl
+            << "\t 7.  Bell Number" << std::endl
+            << "\t 8.  Partitions of an Integer" << std::endl
+            << "\t 9.  Sum Partitions of an Integer" << std::endl
+            << "\t 10. Exit" << std::endl;
 
-	while (menuchoice != 10)
-	{
-		std::cout << std::endl
-			<< "Please select one of the following options:" << std::endl
-			<< "\t 1.  Permuatation" << std::endl
-			<< "\t 2.  Combination" << std::endl
-			<< "\t 3.  K-list" << std::endl
-			<< "\t 4.  Multiset" << std::endl
-			<< "\t 5.  Stirling-Number" << std::endl
-			<< "\t 6.  Sum Stirling-Number" << std::endl
-			<< "\t 7.  Bell Number" << std::endl
-			<< "\t 8.  Partitions of an Integer" << std::endl
-			<< "\t 9.  Sum Partitions of an Integer" << std::endl
-			<< "\t 10. Exit" << std::endl;
+        if (getInt(menuchoice))
+        {
+            switch (menuchoice)
+            {
+            case 1:
+                std::cout << "Please enter an integer." << std::endl;
+                if (getInt(num3)) {
+                    fact(num3);
+                }
+                else
+                {
+                    std::cout << "Please enter an integer." << std::endl;
+                }
 
-		if (getInt(menuchoice))
-		{
-			switch (menuchoice)
-			{
-			case 1:
-				std::cout << "Please enter an integer." << std::endl;
-				if (getInt(num3)) {
+                //permutation paramaters int
+                break;
 
-					// Initialize result
-					res[0] = 1;
-					int res_size = 1;
+            case 2:
+                std::cout << "Please enter 2 integers" << std::endl;
+                    if (getInt(num3) && getInt(num4)){
+                        combination(num3, num4, 1);
+                    }
+                else
+                {
+                    std::cout << "Please enter 2 integers." << std::endl;
+                }
+                break;
 
-					// Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
-					for (int x = 2; x <= num3; x++)
-						res_size = multiply(x, res, res_size);
+            case 3:
+                    
+                    std::cout << "Please enter an 2 integers." << std::endl;
+                    if (getInt(num3)&&getInt(num4)){
+                        klist(num3,num4);
+                    }
+                    else
+                                {
+                                    std::cout << "Please enter an integer." << std::endl;
+                                }
+                    
+                // K list paramaters 2 ints
+                break;
 
-					std::cout << num3 << "! is: ";
-					for (int i = res_size - 1; i >= 0; i--)
-						std::cout << res[i];
-				}
-				else
-				{
-					std::cout << "Please enter an integer." << std::endl;
-				}
-
-				//permutation paramaters int
-				break;
-
-			case 2:
-				std::cout << "Please enter 2 integers" << std::endl;
-				if (getFloat(num1) && getFloat(num2))
-				{
-					float result = num1;
-					for (int i = 2; i <= num2; ++i)
-					{
-						result *= (num1 - i + 1);
-						result /= i;
-					}
-					std::cout << num1 << " choose " << num2 << " is " << result << std::endl;
-				}
-				else
-				{
-					std::cout << "Please enter 2 integers." << std::endl;
-				}
-				break;
-
-			case 3:
-				// K list paramaters 2 ints
-				break;
-
-			case 4:
-				// Multiset pramaters 2 ints
-				break;
-			case 5:
-				//stirling number paramaters 2 ints
-				break;
-			case 6:
-				//sum stirling number paramaters 2 ints
-				break;
-			case 7:
-				// bell number paramater 1 int
-				break;
-			case 8:
-				// partitions of an integer paramaters 2 ints
-				break;
-			case 9:
-				// sum partitions of an integer paramates 2 ints
-				break;
-			case 10:
-				break;
-			default:
-				std::cout << "Please enter one of the options." << std::endl;
-				break;
-			}
-		}
-		else
-		{
-			std::cout << "Please enter an integer." << std::endl;
-		}
-	}
+            case 4:
+                    
+                    std::cout << "Please enter 2 integers" << std::endl;
+                    if (getInt(num3) && getInt(num4))
+                    {
+                             combination(num3+num4-1, num4, 0);
+                    }
+                    else
+                    {
+                        std::cout << "Please enter 2 integers." << std::endl;
+                    }
+                    
+                // Multiset paramaters 2 ints
+                break;
+            case 5:
+                    std::cout << "Please enter 2 integers" << std::endl;
+                    if (getInt(num3) && getInt(num4)){
+                        stirling(num3, num4);
+                    }
+                    else
+                    {
+                    std::cout << "Please enter 2 integers." << std::endl;
+                    }
+                    break;
+                    
+                //stirling number paramaters 2 ints
+                break;
+            case 6:
+                //sum stirling number paramaters 2 ints
+                break;
+            case 7:
+                // bell number paramater 1 int
+                break;
+            case 8:
+                // partitions of an integer paramaters 2 ints
+                break;
+            case 9:
+                // sum partitions of an integer paramates 2 ints
+                break;
+            case 10:
+                break;
+            default:
+                std::cout << "Please enter one of the options." << std::endl;
+                break;
+            }
+        }
+        else
+        {
+            std::cout << "Please enter an integer." << std::endl;
+        }
+    }
 }
+
+
+
+
+
+
 
 
 void vectorMenu(const Settings& set)
@@ -1003,4 +1019,470 @@ void polynomialMenu(const Settings& set)
 		}
 	}
 
+}
+
+
+//(TEMP) Andrew's tokenizer stuff
+
+void lineBasedMenu()
+{
+	std::string str;
+	std::vector<std::string> tokens;
+	while (true) {
+		std::cout << std::endl << "Enter a line to calculate it, or type \"quit\" to go back" << std::endl;
+		std::cout << "Current features: +, -, /, *" << std::endl;
+		std::cout << "sin(), cos(), tan(), arcsin(), arccos(), arctan()" << std::endl;
+		std::cout << "^, ln(), sqrt()" << std::endl;
+		std::getline(std::cin, str);
+		if (str.empty()) {
+			continue;
+		}
+		if (str == "quit") {
+			break;
+		}
+		makeTokens(tokens, str);
+	}
+}
+
+void makeTokens(std::vector<std::string>& tokens, std::string& str)
+{
+	std::string token;
+	bool op = 0;
+	bool num = 0;
+	bool deci = 0;
+	bool alph = 0;
+	for (size_t i = 0; i < str.size(); ++i) {
+		char c = str[i];
+		if (isblank(c)) {
+			if (!token.empty()) {
+				tokens.push_back(token);
+			}
+			token.clear();
+			continue;
+		}
+		if (ispunct(c) && c != '.') {
+			if (i == 0) {
+				op = 1;
+			}
+			if (op && c == '-') {
+				op = 0;
+				num = 1;
+				if (!token.empty()) {
+					tokens.push_back(token);
+				}
+				token.clear();
+				token.push_back(c);
+				continue;
+			}
+			if (!token.empty()) {
+				tokens.push_back(token);
+			}
+			token.clear();
+			token.push_back(c);
+			tokens.push_back(token);
+			token.clear();
+			if (c != '(' && c != ')') {
+				op = 1;
+			}
+			num = 0;
+			alph = 0;
+		}
+		else if (isdigit(c) || c == '.') {
+			op = 0;
+			if (!alph) {
+				num = 1;
+				token.push_back(c);
+			}
+			else {
+				tokens.push_back(token);
+				token.clear();
+				alph = 0;
+				num = 1;
+				token.push_back(c);
+			}
+		}
+		else if (isalpha(c)) {
+			op = 0;
+			if (!num) {
+				alph = 1;
+				token.push_back(c);
+			}
+			else {
+				tokens.push_back(token);
+				token.clear();
+				num = 0;
+				alph = 1;
+				token.push_back(c);
+			}
+		}
+		if (i + 1 == str.size()) {
+			if (!token.empty()) {
+				tokens.push_back(token);
+			}
+			token.clear();
+		}
+	}
+	std::cout << "TESTING OUTPUT" << std::endl;
+	for (const auto t : tokens) {
+		std::cout << t << " || ";
+	}
+	std::cout << std::endl;
+	evaluateTokens(tokens);
+}
+
+void evaluateTokens(std::vector<std::string>& tokens) {
+	std::cout << std::endl;
+	for (const auto& s : tokens) {
+		std::cout << s << " ";
+	}
+	std::cout << std::endl;
+	size_t num = 0;
+	std::vector<int> leftParen;
+	for (size_t i = 0; i < tokens.size(); ++i) {
+		if (tokens[i] == "(") {
+			leftParen.push_back(i);
+			for (size_t j = i + 1; j < tokens.size(); ++j) {
+				if (tokens[j] == "(") {
+					++num;
+					leftParen.push_back(j);
+					i = j;
+					continue;
+				}
+				if (tokens[j] == ")") {
+					long double result = evalInside(i, j, tokens);
+					tokens.erase(tokens.begin() + i, tokens.begin() + j + 1);
+					tokens.insert(tokens.begin() + i, std::to_string(result));
+					if (num > 0) {
+						--num;
+					}
+					else {
+						leftParen.clear();
+					}
+					i = 0;
+					for (const auto& s : tokens) {
+						std::cout << s << " ";
+					}
+					std::cout << std::endl;
+					break;
+				}
+			}
+		}
+	}
+	long double r = evalInside(0, tokens.size(), tokens);
+	std::cout << r << std::endl;
+	tokens.clear();
+}
+
+long double evalInside(const size_t& left, const size_t& right, std::vector<std::string>& tokens) {
+	std::vector<std::string> op;
+	std::vector<long double> numbers;
+	for (size_t i = left; i < right; ++i) {
+		std::istringstream is(tokens[i]);
+		long double num;
+		if (is >> num) {
+			op.push_back("null");
+			numbers.push_back(num);
+		}
+		else if (tokens[i] != "(" && tokens[i] != ")") {
+			op.push_back(tokens[i]);
+			numbers.push_back(0);
+		}
+	}
+
+	std::cout << std::endl;
+	for (const auto s : op) {
+		std::cout << s << " ";
+	}
+	std::cout << std::endl;
+	for (const auto n : numbers) {
+		std::cout << n << " ";
+	}
+	std::cout << std::endl;
+
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "sin") {
+			long double result = sin(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "cos") {
+			long double result = cos(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "tan") {
+			long double result = tan(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "arcsin") {
+			long double result = asin(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "arccos") {
+			long double result = acos(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "arctan") {
+			long double result = atan(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "ln") {
+			long double result = log(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "sqrt") {
+			long double result = sqrt(numbers[i + 1]);
+			numbers.erase(numbers.begin() + i, numbers.begin() + i + 2);
+			numbers.insert(numbers.begin() + i, result);
+			op.erase(op.begin() + i, op.begin() + i + 1);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "^") {
+			long double result = pow(numbers[i - 1], numbers[i + 1]);
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "*") {
+			long double result = numbers[i - 1] * numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "/") {
+			long double result = numbers[i - 1] / numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "+") {
+			long double result = numbers[i - 1] + numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	for (size_t i = 0; i < op.size(); ++i) {
+		if (op[i] == "-") {
+			long double result = numbers[i - 1] - numbers[i + 1];
+			numbers.erase(numbers.begin() + i - 1, numbers.begin() + i + 2);
+			if (numbers.empty()) {
+				numbers.push_back(result);
+			}
+			else {
+				numbers.insert(numbers.begin() + i - 1, result);
+			}
+			op.erase(op.begin() + i, op.begin() + i + 2);
+
+			std::cout << std::endl;
+			for (const auto s : op) {
+				std::cout << s << " ";
+			}
+			std::cout << std::endl;
+			for (const auto n : numbers) {
+				std::cout << n << " ";
+			}
+			std::cout << std::endl;
+
+			i = 0;
+		}
+	}
+	return numbers[0];
 }

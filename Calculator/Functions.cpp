@@ -95,9 +95,68 @@ void klist(int n,int k){
     
 }
 
+void stirling(int n, int k){
+    
+       mpz_t sum;
+    
+    mpz_t top_k;
 
+     mpz_init_set_ui(top_k,1); /* p = 1 */
+     for (int j=1; j <= k ; j++){
+       mpz_mul_ui(top_k,top_k,j); /* p = p * i */
+     }
+    
+    
+    
+    
+    for (int i=0; i <= k ; i++){
+        int c = k-i;
+    
+         mpz_t bottom_i ;
 
+           mpz_init_set_ui(bottom_i,1); /* p = 1 */
+           for (int j=1; j <= i ; j++){
+             mpz_mul_ui(bottom_i,bottom_i,j); /* p = p * i */
+           }
+         
+         mpz_t bottom_k_i ;
 
+            mpz_init_set_ui(bottom_k_i,1); /* p = 1 */
+            for (int j=1; j <= c ; j++){
+              mpz_mul_ui(bottom_k_i,bottom_k_i,j); /* p = p * i */
+            }
+         
+         mpz_t bottom;
+         mpz_mul (bottom,bottom_i,bottom_k_i);
+          
+         mpz_t combination;
+         mpz_divexact (combination, top_k, bottom);
+         
+        
+    mpz_t exponent;
+        mpz_ui_pow_ui (exponent,(k-i),n);
+        
+        
+        mpz_t summand;
+        mpz_mul(summand,exponent,combination);
+        
+        if (i%2){
+            mpz_sub (sum, sum, summand);
+        }
+        else{
+            mpz_add (sum, sum, summand);
+        }
+    
+    
+}
+    
+        mpz_t result;
+         mpz_divexact (result,sum,top_k);
+    
+    printf ("S(%d,%d) =  ",n,k);
+       mpz_out_str(stdout,10,result);
+       mpz_clear(result);
+}
 
 
 // Test Space Test Space Test Space Test Space Test Space

@@ -30,7 +30,7 @@ int main()
 		if (str.empty()) {
 			continue;
 		}
-		StringToTokensWS(tokens, str);
+		StringToTokensWS2(tokens, str);
 		/*
 		if (tokens[tokens.size() - 2] == "end" ||
 			tokens[tokens.size() - 2] == "End" || 

@@ -33,7 +33,7 @@ int main()
 			switch (menuchoice)
 			{
 			case 1:
-				//Function Call Here
+				lineBasedMenu();
 				break;
 			case 2:
 				trigMenu(set);
