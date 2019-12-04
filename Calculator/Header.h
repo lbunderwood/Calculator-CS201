@@ -16,6 +16,7 @@
 #include<cmath>
 #include<cctype>
 #include<iomanip>
+#include<cfloat>
 #include "GMPHeader.h"
 
 
