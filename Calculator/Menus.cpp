@@ -278,7 +278,7 @@ void combinatoricsMenu() {
     
     // Function for paramaters will probably use getint
 
-    while (menuchoice != 10)
+    while (menuchoice != 8)
     {
         std::cout << std::endl
             << "Please select one of the following options:" << std::endl
