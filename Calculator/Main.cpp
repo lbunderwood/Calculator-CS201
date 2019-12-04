@@ -11,7 +11,7 @@ int main()
 	int menuchoice = 0;
 	Settings set;
 
-	while (menuchoice != 9)
+	while (menuchoice != 7)
 	{
 
 		//Main Menu that opens into submenus
@@ -22,9 +22,8 @@ int main()
 			<< "\t 3. Polynomials" << std::endl
             << "\t 4. Combinatorics" << std::endl
 			<< "\t 5. Vectors" << std::endl
-			<< "\t 6. Matrices" << std::endl
-			<< "\t 7. Settings" << std::endl
-			<< "\t 8. Exit" << std::endl;
+			<< "\t 6. Settings" << std::endl
+			<< "\t 7. Exit" << std::endl;
 
 		//Collects input and handles errors
 		if (getInt(menuchoice))
@@ -47,12 +46,9 @@ int main()
 				vectorMenu(set);
 				break;
 			case 6:
-				//Function Call Here
-				break;
-			case 7:
 				optionMenu(set);
 				break;
-			case 8:
+			case 7:
 				break;
 			default:
 				std::cout << "Please enter one of the numbers listed."
